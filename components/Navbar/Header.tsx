@@ -21,7 +21,7 @@ export default function Header() {
             <div className="flex flex-wrap items-center justify-between w-full px-4 mx-autp md:flex-nowrap md:px-10">
                 {/* Brand */}
                 <a
-                    className="hidden text-sm font-semibold text-white uppercase dark:text-black lg:inline-block"
+                    className="hidden text-sm font-semibold text-white uppercase duration-500 dark:text-black lg:inline-block"
                     href="/admin"
                 >
                     Dashboard
@@ -48,7 +48,7 @@ export default function Header() {
                         )}
                     </AnimatePresence>
                     <a
-                        className="text-sm font-semibold text-white uppercase dark:text-black lg:inline-block"
+                        className="text-sm font-semibold text-white uppercase duration-500 dark:text-black lg:inline-block"
                         href="#"
                         onClick={handleSignOut}
                     >
