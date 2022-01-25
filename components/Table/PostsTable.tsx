@@ -20,7 +20,7 @@ export default function PostsTable({
     haveActionRow,
 }: ICardTableProps) {
     return (
-        <div className="flex flex-col w-full min-w-0 mb-6 text-black break-words bg-white rounded shadow-lg">
+        <div className="flex flex-col w-full min-w-0 mb-6 text-white break-words duration-500 rounded shadow-lg dark:text-black bg-slate-900 dark:bg-white">
             <div className="px-4 py-3 mb-0 border-0 rounded-t">
                 <div className="flex flex-wrap items-center">
                     <div className="flex-1 flex-grow w-full max-w-full px-4">
@@ -38,7 +38,6 @@ export default function PostsTable({
                                 className={`
                                         px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left
                                         bg-blueGray-50 text-blueGray-500 border-blueGray-100
-                                        
                                     `}
                             >
                                 Titulo
@@ -108,7 +107,7 @@ export default function PostsTable({
                                         target='_blank'
                                         rel="noreferrer"
                                         href={content.repository}
-                                        className="text-black underline"
+                                        className="text-white underline duration-500 dark:text-black"
                                     >
                                         Link
                                     </a>
