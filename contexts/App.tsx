@@ -29,16 +29,6 @@ export default function AppProvider({ children }) {
         html[0].classList.remove('dark');
     }
 
-    useEffect(() => {
-        window.addEventListener('load', () => {
-            const isDark = localStorage.getItem('@marioportfolio:darkmode');
-
-            toggleDarkMode(Boolean(isDark));
-        })
-
-        return window.removeEventListener('load', () => { });
-    }, []);
-
     return (
         <AppContext.Provider value={{ darkMode, toggleDarkMode }}>
             {children}
