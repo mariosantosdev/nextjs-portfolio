@@ -85,7 +85,7 @@ export default function Sidebar() {
                                                 flex flex-row text-xs uppercase py-3 font-bold   
                                                 ${(router.pathname === '/admin'
                                                     ? "text-indigo-500 hover:text-indigo-700 dark:text-indigo-300 dark:hover:text-indigo-500 transition-colors duration-500"
-                                                    : "text-gray-500 hover:text-black")}
+                                                    : "text-gray-500 hover:text-black dark:text-white transition-colors duration-500")}
                                         `}>
                                             <FaFileAlt className="mr-2 text-sm" />
                                             Posts
@@ -102,7 +102,7 @@ export default function Sidebar() {
                                                 flex flex-row text-xs uppercase py-3 font-bold   
                                                 ${(router.pathname === '/admin/post'
                                                     ? "text-indigo-500 hover:text-indigo-700 dark:text-indigo-300 dark:hover:text-indigo-500 transition-colors duration-500"
-                                                    : "text-gray-500 hover:text-black")}
+                                                    : "text-gray-500 hover:text-black dark:text-white transition-colors duration-500")}
                                         `}>
                                             <FaPenAlt className="mr-2 text-sm" />
                                             Criar Post
