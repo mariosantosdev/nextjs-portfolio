@@ -1,59 +1,15 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 
 import Header from "../../components/Navbar/Header";
 import Footer from "../../components/Footer";
 import PostTable from "../../components/Table/PostsTable";
 import Sidebar from "../../components/Navbar/Sidebar";
 import api from "../../services/api";
+import { GetServerSideProps } from "next";
+import { parseCookies } from "nookies";
 
-const rows = [
-    {
-        id: 'daskmdasda3231',
-        title: 'Sploq App',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc urna quam, rhoncus id urna lacinia, tincidunt rhoncus turpis. Proin in libero turpis. Duis at ultrices augue, ut porta urna. Curabitur sed ultrices ante. Aliquam semper lacinia quam, vitae luctus purus consequat ut.',
-        published: true,
-        repository: 'https://github.com/mariosantos/sploq',
-    },
-    {
-        id: '939123k129',
-        title: 'FinancaSaas',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc urna quam, rhoncus id urna lacinia, tincidunt rhoncus turpis. Proin in libero turpis. Duis at ultrices augue, ut porta urna. Curabitur sed ultrices ante. Aliquam semper lacinia quam, vitae luctus purus consequat ut.',
-        published: false,
-        repository: 'https://github.com/mariosantos/financSaas',
-    },
-    {
-        id: 'd31d01l0s',
-        title: 'FitManager',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc urna quam, rhoncus id urna lacinia, tincidunt rhoncus turpis. Proin in libero turpis. Duis at ultrices augue, ut porta urna. Curabitur sed ultrices ante. Aliquam semper lacinia quam, vitae luctus purus consequat ut.',
-        published: true,
-        repository: 'https://github.com/mariosantos/fitmanager',
-    },
-    {
-        id: '1',
-        title: 'FitManager',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc urna quam, rhoncus id urna lacinia, tincidunt rhoncus turpis. Proin in libero turpis. Duis at ultrices augue, ut porta urna. Curabitur sed ultrices ante. Aliquam semper lacinia quam, vitae luctus purus consequat ut.',
-        published: true,
-        repository: 'https://github.com/mariosantos/fitmanager',
-    },
-]
-
-export default function Dashboard() {
-    const [posts, setPosts] = useState([]);
-
-    async function getPosts() {
-        try {
-            const { data } = await api.get('/api/post');
-
-            setPosts(data.posts);
-        } catch (error: any) {
-            console.error(JSON.stringify(error));
-            alert('Ocorreu um erro ao encontrar os posts.');
-        }
-    }
-
-    useEffect(() => {
-        getPosts()
-    }, []);
+export default function Dashboard({ postsAPI }) {
+    const [posts] = useState(postsAPI || []);
 
     return (
         <Fragment>
@@ -73,4 +29,21 @@ export default function Dashboard() {
             </div>
         </Fragment>
     );
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { ['@marioportfolio:token']: token } = parseCookies(ctx);
+
+    if (!token)
+        return {
+            redirect: {
+                destination: '/signin',
+                permanent: false
+            }
+        }
+
+    const { data } = await api.get('/api/post');
+    return {
+        props: { postsAPI: data.posts }
+    }
 }
