@@ -5,7 +5,8 @@ import {
     FaSignOutAlt,
     FaBars,
     FaTimes,
-    FaFileAlt
+    FaFileAlt,
+    FaPenAlt
 } from 'react-icons/fa'
 
 export default function Sidebar() {
@@ -88,6 +89,23 @@ export default function Sidebar() {
                                         `}>
                                             <FaFileAlt className="mr-2 text-sm" />
                                             Posts
+                                        </span>
+                                    </a>
+                                </Link>
+                            </li>
+
+                            <li className="flex-row items-center">
+                                <Link href="/admin/post">
+                                    <a href="#">
+                                        <span
+                                            className={`
+                                                flex flex-row text-xs uppercase py-3 font-bold   
+                                                ${(router.pathname === '/admin/post'
+                                                    ? "text-indigo-500 hover:text-indigo-700 dark:text-indigo-300 dark:hover:text-indigo-500 transition-colors duration-500"
+                                                    : "text-gray-500 hover:text-black")}
+                                        `}>
+                                            <FaPenAlt className="mr-2 text-sm" />
+                                            Criar Post
                                         </span>
                                     </a>
                                 </Link>
