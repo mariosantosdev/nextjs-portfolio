@@ -42,10 +42,11 @@ export default function Dashboard() {
 
     async function getPosts() {
         try {
-            const { data } = await api.get('/post');
+            const { data } = await api.get('/api/post');
 
-            setPosts(data);
+            setPosts(data.posts);
         } catch (error: any) {
+            console.error(JSON.stringify(error));
             alert('Ocorreu um erro ao encontrar os posts.');
         }
     }
