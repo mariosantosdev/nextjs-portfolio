@@ -82,7 +82,7 @@ export default function Sidebar() {
                                         <span
                                             className={`
                                                 flex flex-row text-xs uppercase py-3 font-bold   
-                                                ${(router.pathname.indexOf("/admin") === 0
+                                                ${(router.pathname === '/admin'
                                                     ? "text-indigo-500 hover:text-indigo-700 dark:text-indigo-300 dark:hover:text-indigo-500 transition-colors duration-500"
                                                     : "text-gray-500 hover:text-black")}
                                         `}>
