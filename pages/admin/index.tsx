@@ -16,8 +16,14 @@ export default function Dashboard({ postsAPI }) {
             <Sidebar />
             <div className="relative h-screen transition-colors duration-500 bg-zinc-100 md:ml-64 dark:bg-slate-800">
                 <Header />
-                <div className="px-4 pt-4 mx-auto md:px-10">
-                    <div className="flex flex-wrap">
+                <div className="flex flex-col px-4 pt-4 mx-auto md:px-10">
+                    <a
+                        href="/admin/post"
+                        className="self-center w-40 p-2 text-center text-white bg-indigo-500 rounded-full hover:bg-indigo-800 md:self-end"
+                    >
+                        Criar Postagem
+                    </a>
+                    <div className="flex flex-wrap mt-4">
                         <PostTable
                             title='Postagens de Projetos'
                             rows={posts}
