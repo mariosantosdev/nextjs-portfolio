@@ -6,7 +6,7 @@ function getUniquePost(id: string) {
         try {
             const prisma = new PrismaClient();
 
-            const post = prisma.post.findFirst({
+            const post = await prisma.post.findFirst({
                 where: { id }
             });
 
@@ -22,7 +22,7 @@ function updateUniquePost(id: string, data: Prisma.PostUpdateInput) {
         try {
             const prisma = new PrismaClient();
 
-            const post = prisma.post.update({
+            const post = await prisma.post.update({
                 where: { id },
                 data,
             });
@@ -71,7 +71,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 res.status(200).send('');
                 break;
             default:
-                res.setHeader('Allow', ['GET', 'PUT'])
+                res.setHeader('Allow', ['GET', 'PUT', 'DELETE'])
                 res.status(405).end(`Method ${method} Not Allowed`)
         }
     } catch (error: any) {
