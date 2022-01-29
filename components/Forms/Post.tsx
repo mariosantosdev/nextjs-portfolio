@@ -1,4 +1,5 @@
-import { FormEvent, useState } from "react";
+import Image from "next/image";
+import { FormEvent, useState, Fragment } from "react";
 import { FaTimes } from 'react-icons/fa';
 
 type PostsData = {
@@ -10,26 +11,52 @@ type PostsData = {
     description: string;
 }
 
+type PostsUpdateData = {
+    title?: string;
+    projectURL?: string;
+    repoURL?: string;
+    isVisible?: boolean;
+    technologies?: string[];
+    description?: string;
+}
+
+type PostFromDB = {
+    id: string;
+    title: string;
+    content?: string;
+    link?: string;
+    repository?: string;
+    published: boolean,
+    cover: string;
+    technologies: string[];
+}
 
 interface IPostForms {
-    onSend: (post: PostsData, file: File) => Promise<void>;
+    onSend?: (post: PostsData, file: File) => Promise<void>;
+    onUpdate?: (post: PostsUpdateData, file?: File) => Promise<void>;
+    onDelete?: (id: string) => Promise<void>;
+    post?: PostFromDB;
 }
 
 export default function PostForms(props: IPostForms) {
-    const { onSend } = props;
+    const { onSend, onUpdate, onDelete, post } = props;
 
-    const [title, setTitle] = useState('');
-    const [projectURL, setProjectURL] = useState('');
-    const [repoURL, setRepoURL] = useState('');
-    const [isVisible, setIsVisible] = useState(true);
+    const [hideModalImage, setHideModalImage] = useState(false);
+
+    const [title, setTitle] = useState(post?.title || '');
+    const [projectURL, setProjectURL] = useState(post?.link || '');
+    const [repoURL, setRepoURL] = useState(post?.repository || '');
+    const [isVisible, setIsVisible] = useState<boolean>(post?.published || true);
     const [file, setFile] = useState<File>();
-    const [technologies, setTechnologies] = useState<string[]>([]);
-    const [description, setDescription] = useState('');
+    const [urlImage, setUrlImage] = useState<string>(post?.cover || null);
+    const [technologies, setTechnologies] = useState<string[]>(post?.technologies || []);
+    const [description, setDescription] = useState(post?.content || '');
 
     const handleChangeFile = (files: FileList) => {
         if (files.length <= 0) return;
 
         setFile(files[0]);
+        setUrlImage(null);
     }
 
     const handleChangeTechnoligies = (rawTechnologies: string) => {
@@ -39,9 +66,7 @@ export default function PostForms(props: IPostForms) {
         setTechnologies(technologiesList);
     }
 
-    function handleSubmit(e: FormEvent) {
-        e.preventDefault();
-
+    function handleCreatePost() {
         if (!title.trim()) return alert('O campo título deve ser preenchido.');
         if (isVisible === undefined) return alert('Informe se o post deve estar vísivel ao público.');
         if (!file) return alert('Selecione uma capa para o post.');
@@ -51,6 +76,28 @@ export default function PostForms(props: IPostForms) {
             { title, projectURL, repoURL, isVisible, technologies, description },
             file
         );
+    }
+
+    function handleUpdatePost() {
+        let data: PostsUpdateData = {};
+
+        if (title !== post.title) data = { ...data, title };
+        if (projectURL !== post.link) data = { ...data, projectURL };
+        if (repoURL !== post.repository) data = { ...data, repoURL };
+        if (isVisible !== post.published) data = { ...data, isVisible };
+        if (technologies !== post.technologies) data = { ...data, technologies };
+        if (description !== post.content) data = { ...data, description };
+
+        const fileToUpload = (!urlImage && file) && file;
+
+        onUpdate(data, fileToUpload);
+    }
+
+    function handleSubmit(e: FormEvent) {
+        e.preventDefault();
+
+        if (onSend) return handleCreatePost();
+        if (onUpdate) return handleUpdatePost();
     }
 
     return (
@@ -143,6 +190,21 @@ export default function PostForms(props: IPostForms) {
                                 Selecionar Capa
                             </label>
                         </div>
+                        {urlImage && (
+                            <div className="flex items-center justify-between px-2">
+                                <div className="flex flex-row items-center w-full">
+                                    <Image
+                                        src={urlImage}
+                                        alt={post.title}
+                                        width={32}
+                                        height={32}
+                                    />
+                                    <p className="w-1/2 ml-1 text-xs text-gray-900 truncate transition-colors duration-500 dark:text-white">
+                                        Imagem Atual
+                                    </p>
+                                </div>
+                            </div>
+                        )}
                         {file && (
                             <div className="flex items-center justify-between px-2">
                                 <p className="w-1/2 text-xs text-gray-900 truncate transition-colors duration-500 dark:text-white">{file.name}</p>
@@ -188,9 +250,17 @@ export default function PostForms(props: IPostForms) {
             </div>
 
             <div className="flex flex-wrap justify-end w-full mb-6">
-                <button className="p-2 px-8 text-center text-white bg-indigo-500 rounded-full hover:bg-indigo-800">
-                    CRIAR
+                <button className="p-2 px-8 mx-4 text-center text-white bg-indigo-500 rounded-full hover:bg-indigo-800">
+                    {onSend ? 'CRIAR' : 'Atualizar'}
                 </button>
+                {onUpdate && (
+                    <button
+                        className="p-2 px-8 text-center text-white bg-red-500 rounded-full hover:bg-red-800"
+                        onClick={(e) => { e.preventDefault(); onDelete(post.id); }}
+                    >
+                        Deletar
+                    </button>
+                )}
             </div>
         </form>
     )
