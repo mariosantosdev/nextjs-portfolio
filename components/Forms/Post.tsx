@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { FaTimes } from 'react-icons/fa';
 
 type PostsData = {
@@ -6,14 +6,13 @@ type PostsData = {
     projectURL: string;
     repoURL: string;
     isVisible: boolean;
-    file: File;
     technologies: string[];
     description: string;
 }
 
 
 interface IPostForms {
-    onSend: (post: PostsData) => Promise<void>;
+    onSend: (post: PostsData, file: File) => Promise<void>;
 }
 
 export default function PostForms(props: IPostForms) {
@@ -48,7 +47,10 @@ export default function PostForms(props: IPostForms) {
         if (!file) return alert('Selecione uma capa para o post.');
         if (technologies.length <= 0) return alert('Escreva pelo menos uma tecnologia.');
 
-        onSend({ title, projectURL, repoURL, isVisible, file, technologies, description });
+        onSend(
+            { title, projectURL, repoURL, isVisible, technologies, description },
+            file
+        );
     }
 
     return (
