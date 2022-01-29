@@ -27,8 +27,6 @@ export default function PostForms(props: IPostForms) {
     const [technologies, setTechnologies] = useState<string[]>([]);
     const [description, setDescription] = useState('');
 
-    useEffect(() => console.log(technologies), [technologies]);
-
     const handleChangeFile = (files: FileList) => {
         if (files.length <= 0) return;
 
