@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FormEvent, useState, Fragment } from "react";
+import { FormEvent, useState, KeyboardEvent } from "react";
 import { FaTimes } from 'react-icons/fa';
 
 type PostsData = {
@@ -62,6 +62,20 @@ export default function PostForms(props: IPostForms) {
         const technologiesList = rawTechnologiesList.map(technology => technology.trim());
 
         setTechnologies(technologiesList);
+    }
+
+    const handleKeyDownTechnologies = (e: KeyboardEvent<HTMLInputElement>) => {
+        const { key } = e;
+        const lastItemTechnologies = technologies[technologies.length - 1];
+
+        if (key === 'Backspace') {
+            if (lastItemTechnologies.length >= 1) return;
+
+            e.preventDefault();
+            const technologiesCopy = [...technologies];
+            technologiesCopy.pop();
+            setTechnologies(technologiesCopy);
+        }
     }
 
     function handleCreatePost() {
@@ -226,6 +240,7 @@ export default function PostForms(props: IPostForms) {
                         placeholder="ReactJS, ..."
                         value={technologies.join(', ')}
                         onChange={e => handleChangeTechnoligies(e.target.value)}
+                        onKeyDown={handleKeyDownTechnologies}
                     />
                     <p className="text-xs italic text-gray-600 transition-colors duration-500 dark:text-white">Separe as tecnologias por uma vírgula</p>
                 </div>
