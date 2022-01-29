@@ -13,11 +13,11 @@ type PostsData = {
 
 type PostsUpdateData = {
     title?: string;
-    projectURL?: string;
-    repoURL?: string;
-    isVisible?: boolean;
+    link?: string;
+    repository?: string;
+    published?: boolean;
     technologies?: string[];
-    description?: string;
+    content?: string;
 }
 
 type PostFromDB = {
@@ -40,8 +40,6 @@ interface IPostForms {
 
 export default function PostForms(props: IPostForms) {
     const { onSend, onUpdate, onDelete, post } = props;
-
-    const [hideModalImage, setHideModalImage] = useState(false);
 
     const [title, setTitle] = useState(post?.title || '');
     const [projectURL, setProjectURL] = useState(post?.link || '');
@@ -82,11 +80,11 @@ export default function PostForms(props: IPostForms) {
         let data: PostsUpdateData = {};
 
         if (title !== post.title) data = { ...data, title };
-        if (projectURL !== post.link) data = { ...data, projectURL };
-        if (repoURL !== post.repository) data = { ...data, repoURL };
-        if (isVisible !== post.published) data = { ...data, isVisible };
+        if (projectURL !== post.link) data = { ...data, link: projectURL };
+        if (repoURL !== post.repository) data = { ...data, repository: repoURL };
+        if (isVisible !== post.published) data = { ...data, published: isVisible };
         if (technologies !== post.technologies) data = { ...data, technologies };
-        if (description !== post.content) data = { ...data, description };
+        if (description !== post.content) data = { ...data, content: description };
 
         const fileToUpload = (!urlImage && file) && file;
 
