@@ -1,6 +1,8 @@
 import { PrismaClient, Post, Prisma } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
+import isAuthenticated from "../../../services/authMiddleware";
+
 function getUniquePost(id: string) {
     return new Promise<Post>(async (resolve, reject) => {
         try {
@@ -61,11 +63,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 res.status(200).json({ post });
                 break;
             case 'PUT':
+                if (!await isAuthenticated(req))
+                    return res.status(403).json({ message: 'Você não tem acesso a essa api.' });
+
                 const idToUpdate = typeof query.id === 'object' ? query.id[0] : query.id;
                 const postUpdated = await updateUniquePost(idToUpdate, req.body);
                 res.status(200).json({ post: postUpdated });
                 break;
             case 'DELETE':
+                if (!await isAuthenticated(req))
+                    return res.status(403).json({ message: 'Você não tem acesso a essa api.' });
+
                 const idToDelete = typeof query.id === 'object' ? query.id[0] : query.id;
                 await deleteUniquePost(idToDelete);
                 res.status(200).send('');

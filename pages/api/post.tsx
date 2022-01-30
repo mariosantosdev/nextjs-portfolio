@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
+import isAuthenticated from "../../services/authMiddleware";
 
 type PostsData = {
     title: string;
@@ -67,6 +68,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 break;
 
             case 'POST':
+                if (!await isAuthenticated(req))
+                    return res.status(403).json({ message: 'Você não tem acesso a essa api.' });
+
                 const post = await createPost(req.body);
                 res.status(201).json({ post });
                 break;
