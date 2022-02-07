@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import Spinner from "../Spinner";
 
 export type ContactData = {
     name: string;
@@ -8,10 +9,11 @@ export type ContactData = {
 
 interface IContactForm {
     onSend?: (contact: ContactData) => Promise<void>;
+    loading?: boolean;
 }
 
 export default function ContactForm(props: IContactForm) {
-    const { onSend } = props;
+    const { onSend, loading } = props;
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -86,8 +88,10 @@ export default function ContactForm(props: IContactForm) {
             </div>
 
             <div className="flex flex-wrap justify-end w-full mb-6">
-                <button className="p-2 px-8 mx-4 text-center text-white bg-indigo-500 rounded-full hover:bg-indigo-800">
-                    Enviar
+                <button disabled={loading} className="p-2 px-8 mx-4 text-center text-white bg-indigo-500 rounded-full disabled:hover:bg-indigo-300 disabled:cursor-wait disabled:bg-indigo-300 hover:bg-indigo-800">
+                    {loading ? (
+                        <Spinner />
+                    ) : 'Enviar'}
                 </button>
             </div>
         </form>
