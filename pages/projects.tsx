@@ -48,7 +48,11 @@ export default function Home({ postsAPI }) {
                     <div className='flex flex-col flex-wrap items-center justify-center w-full h-full min-h-screen px-4 md:flex-row md:px-0'>
                         {posts.length >= 0 ? (
                             posts.map(post => (
-                                <SimplePost key={post.id} post={post} />
+                                <SimplePost
+                                    key={post.id}
+                                    post={post}
+                                    onClick={() => router.push(`/project/${post.id}`)}
+                                />
                             ))
                         ) : (
                             <span className='flex flex-col text-xl text-center text-white md:text-4xl'>

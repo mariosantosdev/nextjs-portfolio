@@ -164,7 +164,11 @@ export default function Home({ postsAPI }) {
 
                         <div className='flex flex-col flex-wrap items-center justify-center w-full md:flex-row md:px-0'>
                             {posts.map(post => (
-                                <SimplePost key={post.id} post={post} />
+                                <SimplePost
+                                    key={post.id}
+                                    post={post}
+                                    onClick={() => router.push(`/project/${post.id}`)}
+                                />
                             ))}
                         </div>
                     </div>
