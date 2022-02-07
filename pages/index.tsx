@@ -152,20 +152,22 @@ export default function Home({ postsAPI }) {
             {/* Top Services */}
             {posts.length > 1 && (
                 <section id='top_services' className='flex flex-col items-center py-4 bg-indigo-900'>
-                    <div className='relative flex flex-col items-center justify-center w-full md:flex-row'>
-                        <h1 className='mb-4 text-2xl text-white md:text-4xl'>Projetos Populares</h1>
-                        <button
-                            onClick={() => router.push('/projects')}
-                            className='relative p-4 px-6 text-black bg-white rounded-md shadow-md md:absolute md:right-4'
-                        >
-                            &#8599; Ver Todos
-                        </button>
-                    </div>
+                    <div className='flex flex-col items-center max-w-5xl'>
+                        <div className='relative flex flex-col items-center justify-center w-full md:flex-row'>
+                            <h1 className='mb-4 text-2xl text-white md:text-4xl'>Projetos Populares</h1>
+                            <button
+                                onClick={() => router.push('/projects')}
+                                className='relative p-4 px-6 text-black bg-white rounded-md shadow-md md:absolute md:right-4'
+                            >
+                                &#8599; Ver Todos
+                            </button>
+                        </div>
 
-                    <div className='flex flex-col flex-wrap items-center justify-center w-full px-4 md:flex-row md:px-0'>
-                        {posts.map(post => (
-                            <SimplePost key={post.id} post={post} />
-                        ))}
+                        <div className='flex flex-col flex-wrap items-center justify-center w-full md:flex-row md:px-0'>
+                            {posts.map(post => (
+                                <SimplePost key={post.id} post={post} />
+                            ))}
+                        </div>
                     </div>
                 </section>
             )}
