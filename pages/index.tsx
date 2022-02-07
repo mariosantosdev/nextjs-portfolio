@@ -58,6 +58,7 @@ export default function Home({ postsAPI }) {
                                 className='rounded-full'
                                 blurDataURL="data:..."
                                 placeholder="blur"
+                                priority
                             />
                         </div>
 
