@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { parseCookies } from 'nookies';
 
 import { PublicFooter } from '../components/Footer';
 import Header from '../components/Navbar/PublicHeader';
@@ -78,17 +75,7 @@ export default function Home({ postsAPI }) {
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const { ['@marioportfolio:token']: token } = parseCookies(ctx);
-
-    if (!token)
-        return {
-            redirect: {
-                destination: '/signin',
-                permanent: false
-            }
-        }
-
+export const getServerSideProps: GetServerSideProps = async () => {
     const { data } = await api.get<{ posts: Post[] }>('/api/post');
     return {
         props: { postsAPI: data.posts.filter(post => post.published === true) }
