@@ -7,7 +7,7 @@ export default function Spinner({ size, color }: ISpinnerProps) {
     function getSize() {
         switch (size) {
             case 'sm':
-                return 'w-4 h-4'
+                return 'w-6 h-6'
 
             case 'md':
                 return 'w-8 h-8'
@@ -19,7 +19,7 @@ export default function Spinner({ size, color }: ISpinnerProps) {
                 return 'w-16 h-16'
 
             default:
-                return 'w-4 h-4';
+                return 'w-6 h-6';
         }
     }
 
