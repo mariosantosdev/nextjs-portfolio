@@ -48,10 +48,9 @@ export default function SimplePost({ post, onClick }: ISimplePost) {
                         layout="fill"
                         alt={post.title}
                         objectFit='cover'
-                        className="transition ease-out transform hover:scale-125 duration-2000"
+                        className="transition duration-700 ease-out transform bg-black hover:scale-125 brightness-50"
                         blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`}
                         placeholder="blur"
-
                     />
                     <h1 className='absolute text-lg text-white bottom-1 left-1'>{post.title}</h1>
                 </div>
