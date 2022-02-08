@@ -1,4 +1,5 @@
 import React from "react";
+import PublicFooter from "./publicFooter";
 
 export default function Footer() {
     return (
@@ -16,3 +17,5 @@ export default function Footer() {
         </footer>
     );
 }
+
+export { PublicFooter };
