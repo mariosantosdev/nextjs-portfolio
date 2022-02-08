@@ -25,6 +25,8 @@ export default function Home({ postsAPI }) {
     const router = useRouter();
     const [posts] = useState<Post[]>(postsAPI || []);
 
+    console.log(posts)
+
     return (
         <div>
             <Head>
@@ -46,7 +48,7 @@ export default function Home({ postsAPI }) {
                 <div className='flex flex-col w-full max-w-5xl'>
                     <h1 className='px-4 mb-4 -mt-16 text-2xl text-center text-indigo-500 md:text-left md:text-6xl'>Projetos</h1>
                     <div className='flex flex-col flex-wrap items-center justify-center w-full h-full min-h-screen px-4 md:flex-row md:px-0'>
-                        {posts.length >= 0 ? (
+                        {posts.length > 0 ? (
                             posts.map(post => (
                                 <SimplePost
                                     key={post.id}
