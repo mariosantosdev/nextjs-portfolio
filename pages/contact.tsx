@@ -1,32 +1,23 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 
 import { PublicFooter } from '../components/Footer';
 import ContactForm, { ContactData } from '../components/Forms/Contact';
 import Header from '../components/Navbar/PublicHeader';
-import api from '../services/api';
 
 export default function Home() {
     const router = useRouter();
 
-    const [loading, setLoading] = useState(false);
-
-    async function handleSendEmail(contact: ContactData) {
+    async function handleSendEmail({ name, email, description }: ContactData) {
         try {
-            setLoading(true);
+            const subject = `${name} - contato via portofolio`
 
-            await api.post('/api/send_mail', contact);
-
-            alert('E-mail enviado com sucesso! Em breve você irá receber um retorno!');
-
-            setLoading(false);
+            router.push(`mailto:mariodev7@gmail.com?Subject=${encodeURI(subject)}&Body=${encodeURI(description)}`);
         } catch (error: any) {
             if (confirm('Ocorreu um erro ao enviar o e-mail! Você deseja enviar por uma aba externa?')) {
                 router.push('mailto:mariodev7@gmail.com');
             }
             console.error(error.response);
-            setLoading(false);
         }
     }
 
@@ -96,10 +87,7 @@ export default function Home() {
                         <div className='flex flex-col justify-center w-full h-full '>
                             <h1 className='mb-4 text-xl text-center text-gray-800 md:text-2xl'>Orçamento</h1>
 
-                            <ContactForm
-                                onSend={handleSendEmail}
-                                loading={loading}
-                            />
+                            <ContactForm onSend={handleSendEmail} />
                         </div>
                     </div>
                 </div>
