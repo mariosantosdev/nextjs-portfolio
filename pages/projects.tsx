@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head'
 import { useRouter } from 'next/router';
@@ -25,10 +25,8 @@ export default function Home({ postsAPI }) {
     const router = useRouter();
     const [posts] = useState<Post[]>(postsAPI || []);
 
-    console.log(posts)
-
     return (
-        <div>
+        <Fragment>
             <Head>
                 <title>Projetos | Mário Santos</title>
 
@@ -44,10 +42,13 @@ export default function Home({ postsAPI }) {
 
             <Header />
 
-            <main className='flex flex-col justify-center py-4 mt-12 bg-indigo-900 lg:flex-row'>
+            <main className="flex flex-col items-center justify-center p-4 bg-indigo-900">
+                <div className='flex justify-center w-full max-w-5xl md:justify-start'>
+                    <h1 className='mb-4 text-2xl text-center text-white md:text-left md:text-6xl'>Projetos</h1>
+                </div>
+
                 <div className='flex flex-col w-full max-w-5xl'>
-                    <h1 className='px-4 mb-4 -mt-16 text-2xl text-center text-indigo-500 md:text-left md:text-6xl'>Projetos</h1>
-                    <div className='flex flex-col flex-wrap items-center justify-center w-full h-full min-h-screen px-4 md:flex-row md:px-0'>
+                    <div className='flex flex-col flex-wrap items-center justify-center w-full h-full min-h-screen md:flex-row md:px-0'>
                         {posts.length > 0 ? (
                             posts.map(post => (
                                 <SimplePost
@@ -77,7 +78,7 @@ export default function Home({ postsAPI }) {
             </main>
 
             <PublicFooter />
-        </div>
+        </Fragment>
     )
 }
 

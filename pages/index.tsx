@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head'
 import Image from 'next/image'
@@ -28,7 +28,7 @@ export default function Home({ postsAPI }) {
     const [posts] = useState<Post[]>(postsAPI || []);
 
     return (
-        <div>
+        <Fragment>
             <Head>
                 <title>Mário Santos - Desenvolvedor Mobile, Web, Backend</title>
 
@@ -177,7 +177,7 @@ export default function Home({ postsAPI }) {
             )}
 
             <PublicFooter />
-        </div>
+        </Fragment>
     )
 }
 
