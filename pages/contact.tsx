@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router';
 
@@ -22,7 +23,7 @@ export default function Home() {
     }
 
     return (
-        <div>
+        <Fragment>
             <Head>
                 <title>Contato | Mário Santos</title>
 
@@ -38,11 +39,12 @@ export default function Home() {
 
             <Header />
 
-            <main className='flex flex-col justify-center py-4 mt-12 bg-indigo-900 lg:flex-row'>
-                <div className='flex flex-col w-full max-w-5xl min-h-screen md:px-4 lg:px-0'>
-                    <h1 className='px-4 mb-4 -mt-16 text-2xl text-center text-indigo-500 md:text-left md:text-6xl'>Contato</h1>
-
-                    <div className='flex flex-col-reverse items-center justify-center w-full p-4 mt-4 bg-white rounded-lg lg:flex-row'>
+            <main className='flex flex-col items-center justify-center p-4 bg-indigo-900'>
+                <div className='flex justify-center w-full max-w-5xl md:justify-start'>
+                    <h1 className='mb-4 text-2xl text-center text-white md:text-left md:text-6xl'>Contato</h1>
+                </div>
+                <div className='flex flex-col w-full max-w-5xl min-h-screen'>
+                    <div className='flex flex-row justify-center w-full p-4 mt-4 bg-white rounded-lg'>
                         {/* Social Media */}
                         <aside className='flex-col hidden w-3/6 h-full lg:flex'>
                             <h1 className='mb-4 text-xl text-gray-800 md:text-2xl'>Redes Sociais</h1>
@@ -84,7 +86,7 @@ export default function Home() {
                         </aside>
 
                         {/* Form */}
-                        <div className='flex flex-col justify-center w-full h-full '>
+                        <div className='flex flex-col justify-center w-full h-full'>
                             <h1 className='mb-4 text-xl text-center text-gray-800 md:text-2xl'>Orçamento</h1>
 
                             <ContactForm onSend={handleSendEmail} />
@@ -95,6 +97,6 @@ export default function Home() {
             </main>
 
             <PublicFooter />
-        </div>
+        </Fragment>
     )
 }
