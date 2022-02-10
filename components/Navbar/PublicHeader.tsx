@@ -9,14 +9,24 @@ import {
     AiOutlineMenu,
     AiOutlineClose
 } from 'react-icons/ai'
+import { motion, AnimatePresence } from "framer-motion";
+
+import PageLink, { IPropsPageLink } from "./PageLink";
+
 
 export default function Header() {
     const router = useRouter();
 
     const [showMenu, setShowMenu] = useState(false);
 
+    const pages: IPropsPageLink[] = [
+        { title: 'Inicio', path: '/' },
+        { title: 'Projetos', path: '/projects' },
+        { title: 'Contato', path: '/contact' },
+    ]
+
     return (
-        <header className="flex flex-col w-screen p-4 md:flex-row">
+        <header className={`${showMenu && 'h-screen fixed z-50'} flex flex-col w-screen p-4 md:flex-row bg-white`}>
             {/* SmallScreen Version */}
             <div className="flex flex-row md:hidden">
                 <div className="flex flex-col w-full md:w-1/3">
@@ -25,57 +35,37 @@ export default function Header() {
                 </div>
 
                 <button className="md:hidden" onClick={() => setShowMenu(prev => !prev)}>
-                    <AiOutlineMenu />
+                    <AnimatePresence>
+                        {!showMenu ? (
+                            <motion.div
+                                initial={{ rotateZ: 180 }}
+                                animate={{ rotateZ: 360 }}
+                                exit={{ rotateZ: 0 }}
+                            >
+                                <AiOutlineMenu />
+                            </motion.div>
+                        ) : (
+                            <motion.div>
+                                <AiOutlineClose />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
                 </button>
             </div>
 
-            <div className={`${showMenu ? 'flex' : 'hidden'} relative md:hidden h-min flex-col py-4 bg-zinc-100 rounded-md`}>
-                <button className="absolute top-2 right-2" onClick={() => setShowMenu(false)}>
-                    <AiOutlineClose />
-                </button>
-                <div className="h-1/3">
-                    <ul className="flex flex-col items-center justify-center h-full ">
-                        <li
-                            className={`
-                            flex justify-center w-1/3 transition-all duration-300 hover:text-xl
-                            ${(router.pathname === '/')
-                                    ? ' dark:text-indigo-300 text-indigo-500'
-                                    : ' dark:text-white text-gray-600'}
-                        `}
-                        >
-                            <Link href='/'>
-                                <a>Início</a>
-                            </Link>
-                        </li>
-                        <li
-                            className={`
-                            flex justify-center w-1/3 transition-all duration-300 hover:text-xl
-                            ${(router.pathname === '/projects')
-                                    ? 'text-indigo-500 dark:text-indigo-300'
-                                    : 'text-gray-600 dark:text-white'}
-                        `}
-                        >
-                            <Link href='/projects'>
-                                <a>Projetos</a>
-                            </Link>
-                        </li>
-                        <li
-                            className={`
-                            flex justify-center w-1/3 transition-all duration-300 hover:text-xl
-                            ${(router.pathname === '/contact')
-                                    ? 'text-indigo-500 dark:text-indigo-300'
-                                    : 'text-gray-600 dark:text-white'}
-                        `}
-                        >
-                            <Link href='/contact'>
-                                <a>Contato</a>
-                            </Link>
-                        </li>
+            <div className={`${showMenu ? 'flex' : 'hidden'} flex-col md:hidden h-full`}>
+                <div className="h-full py-4">
+                    <ul className="flex flex-col items-center h-full space-y-2">
+                        {pages.map(({ title, path }) => (
+                            <PageLink key={path} path={path} title={title} />
+                        ))}
                     </ul>
                 </div>
 
-                <div className="flex flex-col h-1/3">
-                    <ul className="flex flex-row items-center justify-center w-full mt-4">
+                <div className="flex flex-col h-min">
+                    <ul className="flex flex-row items-center justify-center w-full py-4">
+                        {/* Instagram Button */}
                         <li>
                             <Link href="https://www.instagram.com/mariosantos.dev/">
                                 <a target='_blank'>
@@ -86,6 +76,8 @@ export default function Header() {
                                 </a>
                             </Link>
                         </li>
+
+                        {/* Github Button */}
                         <li>
                             <Link href="https://github.com/mariosantosdev">
                                 <a target='_blank'>
@@ -96,6 +88,8 @@ export default function Header() {
                                 </a>
                             </Link>
                         </li>
+
+                        {/* LinkedIn Button */}
                         <li>
                             <Link href="https://www.linkedin.com/in/mariosantos-dev/">
                                 <a target='_blank'>
@@ -106,6 +100,8 @@ export default function Header() {
                                 </a>
                             </Link>
                         </li>
+
+                        {/* Twitter Button */}
                         <li>
                             <Link href="https://twitter.com/mariosantosdev">
                                 <a target='_blank'>
