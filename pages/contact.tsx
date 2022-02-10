@@ -1,10 +1,10 @@
 import { Fragment } from 'react'
-import Head from 'next/head'
 import { useRouter } from 'next/router';
 
 import { PublicFooter } from '../components/Footer';
 import ContactForm, { ContactData } from '../components/Forms/Contact';
 import Header from '../components/Navbar/PublicHeader';
+import Head from '../components/Head';
 
 export default function Home() {
     const router = useRouter();
@@ -24,18 +24,7 @@ export default function Home() {
 
     return (
         <Fragment>
-            <Head>
-                <title>Contato | Mário Santos</title>
-
-                <meta
-                    property="og:url"
-                    content={`https://yourwebsite.com${router.asPath}`}
-                />
-                <link
-                    rel="canonical"
-                    href={`https://yourwebsite.com${router.asPath}`}
-                />
-            </Head>
+            <Head title='Contato | Mário Santos' path={router.asPath} />
 
             <Header />
 

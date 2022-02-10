@@ -39,6 +39,8 @@ export default function CreatePost() {
             <Head>
                 <title>Criar Post | Dashboard Mário Portfolio</title>
                 <link rel="icon" href="/favicon.ico" />
+
+                <meta name="robots" content="none" />
             </Head>
 
             <Sidebar />

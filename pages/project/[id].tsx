@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { GetServerSideProps } from 'next';
-import Head from 'next/head'
 import Image from 'next/image'
 import { useRouter } from 'next/router';
 
@@ -8,6 +7,7 @@ import { PublicFooter } from '../../components/Footer';
 import Header from '../../components/Navbar/PublicHeader';
 import api from '../../services/api';
 import GhostLinkButton from '../../components/Button/GhostLinkButton';
+import Head from '../../components/Head'
 
 type Post = {
     id: string;
@@ -29,19 +29,8 @@ export default function Project({ postsAPI }) {
     if (!post) return null;
 
     return (
-        <div>
-            <Head>
-                <title>{post.title} | Mário Santos</title>
-
-                <meta
-                    property="og:url"
-                    content={`https://yourwebsite.com${router.asPath}`}
-                />
-                <link
-                    rel="canonical"
-                    href={`https://yourwebsite.com${router.asPath}`}
-                />
-            </Head>
+        <Fragment>
+            <Head title={`${post.title} | Mário Santos`} path={router.asPath} />
 
             <Header />
 
@@ -110,7 +99,7 @@ export default function Project({ postsAPI }) {
             </section>
 
             <PublicFooter />
-        </div>
+        </Fragment>
     )
 }
 

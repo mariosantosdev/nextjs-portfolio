@@ -1,0 +1,13 @@
+# Block all crawlers for /admin
+User-agent: *
+Disallow: /admin
+
+# Block all crawlers for /signin
+User-agent: *
+Disallow: /signin
+
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+Sitemap: https://devmario.me/sitemap.xml
