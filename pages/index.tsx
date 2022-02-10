@@ -1,6 +1,5 @@
 import { Fragment, useState } from 'react';
 import { GetServerSideProps } from 'next';
-import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -9,6 +8,7 @@ import { PublicFooter } from '../components/Footer';
 import Header from '../components/Navbar/PublicHeader';
 import api from '../services/api';
 import SimplePost from '../components/Post';
+import Head from '../components/Head'
 
 type Post = {
     id: string;
@@ -29,18 +29,7 @@ export default function Home({ postsAPI }) {
 
     return (
         <Fragment>
-            <Head>
-                <title>Mário Santos - Desenvolvedor Mobile, Web, Backend</title>
-
-                <meta
-                    property="og:url"
-                    content={`https://yourwebsite.com${router.asPath}`}
-                />
-                <link
-                    rel="canonical"
-                    href={`https://yourwebsite.com${router.asPath}`}
-                />
-            </Head>
+            <Head title='Mário Santos - Desenvolvedor Mobile, Web, Backend' path={router.asPath} />
 
             <Header />
 
