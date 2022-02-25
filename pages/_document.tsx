@@ -2,7 +2,7 @@ import { Html, Head, Main, NextScript } from 'next/document'
 
 export default function Document() {
     return (
-        <Html lang='pt_BR'>
+        <Html lang='pt_BR' className="scroll-smooth">
             <Head>
                 <meta name="description" content="Sou programador há 5 anos, com experiência em diversos projetos." />
                 <link rel="icon" href="/favicon.ico" />

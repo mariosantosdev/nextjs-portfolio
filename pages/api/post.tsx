@@ -12,12 +12,12 @@ type PostsData = {
     description: string;
 }
 
-function getPosts() {
+function getPosts(limit?: number) {
     return new Promise(async (resolve, reject) => {
         try {
             const prisma = new PrismaClient();
 
-            const posts = prisma.post.findMany({});
+            const posts = prisma.post.findMany({take: limit});
 
             resolve(posts);
         } catch (error: any) {
@@ -63,7 +63,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
         switch (req.method) {
             case 'GET':
-                const posts = await getPosts();
+                const { limit } = req.query;
+                const limitToFetch = Number(
+                typeof limit === 'string' ? limit : limit[0]
+                );
+                const posts = await getPosts(limitToFetch);
                 res.status(200).json({ posts });
                 break;
 
