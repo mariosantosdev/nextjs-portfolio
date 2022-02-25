@@ -18,6 +18,8 @@ export default function Dashboard({ postsAPI }) {
             <Head>
                 <title>Dashboard Mário Portfolio</title>
                 <link rel="icon" href="/favicon.ico" />
+
+                <meta name="robots" content="none" />
             </Head>
             <Sidebar />
             <div className="relative h-screen transition-colors duration-500 bg-zinc-100 md:ml-64 dark:bg-slate-800">
