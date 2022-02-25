@@ -45,61 +45,49 @@ export default function ContactSession() {
           </h1>
         </div>
 
-        <div className="flex flex-row justify-center w-full p-4 mt-4 bg-gray-100 rounded-lg">
+        <div className="flex flex-col-reverse justify-center w-full p-4 mt-4 bg-gray-100 rounded-lg md:flex-row">
           {/* Social Media */}
-          <aside className="flex-col hidden w-3/6 h-full lg:flex">
-            <h1 className="mb-4 text-xl text-gray-800 md:text-2xl">
+          <aside className="flex flex-col h-full lg:w-3/6">
+            <h1 className="hidden mb-4 text-xl text-gray-800 md:block md:text-2xl">
               Redes Sociais
             </h1>
 
-            <ul className="flex flex-col space-y-2">
+            <ul className="flex flex-row justify-center space-x-4 md:space-x-0 md:space-y-2 md:flex-col">
               <a
                 href="http://instagram.com/mariosantosdev"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-row text-gray-700 hover:underline"
+                className="flex flex-row items-center space-x-1 text-gray-700 hover:underline"
               >
-                <AiFillInstagram
-                  className="transition-all duration-300 hover:text-indigo-500"
-                  size={24}
-                />
-                 Instagram
+                <AiFillInstagram className="text-2xl transition-all duration-300 md:text-xl hover:text-indigo-500" />
+                <p className="hidden md:block">Instagram</p>
               </a>
               <a
                 href="https://www.linkedin.com/in/mariosantos-dev/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-row text-gray-700 hover:underline"
+                className="flex flex-row items-center space-x-1 text-gray-700 hover:underline"
               >
-                <AiFillLinkedin
-                  className="transition-all duration-300 hover:text-indigo-500"
-                  size={24}
-                />
-                 LinkedIn
+                <AiFillLinkedin className="text-2xl transition-all duration-300 md:text-xl hover:text-indigo-500" />
+                <p className="hidden md:block">LinkedIn</p>
               </a>
               <a
                 href="https://twitter.com/mariosantosdev"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-row text-gray-700 hover:underline"
+                className="flex flex-row items-center space-x-1 text-gray-700 hover:underline"
               >
-                <AiOutlineTwitter
-                  className="transition-all duration-300 hover:text-indigo-500"
-                  size={24}
-                />
-                 Twitter
+                <AiOutlineTwitter className="text-2xl transition-all duration-300 md:text-xl hover:text-indigo-500" />
+                <p className="hidden md:block">Twitter</p>
               </a>
               <a
                 href="https://github.com/mariosantosdev"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-row text-gray-700 hover:underline"
+                className="flex flex-row items-center space-x-1 text-gray-700 hover:underline"
               >
-                <AiFillGithub
-                  className="transition-all duration-300 hover:text-indigo-500"
-                  size={24}
-                />
-                 Github
+                <AiFillGithub className="text-2xl transition-all duration-300 md:text-xl hover:text-indigo-500" />
+                <p className="hidden md:block">Github</p>
               </a>
             </ul>
           </aside>
