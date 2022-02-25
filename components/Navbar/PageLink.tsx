@@ -15,11 +15,7 @@ export default function PageLink({ title, path }: IPropsPageLink) {
     <li
       className={`
                 flex justify-center lg:w-1/4 lg:text-md w-full text-xl transition-all duration-300 hover:text-xl
-                ${
-                  router.asPath === pathToCompare
-                    ? ' text-indigo-500'
-                    : ' text-white'
-                }
+                ${router.asPath === path ? ' text-indigo-500' : ' text-white'}
                 `}
     >
       <Link href={path}>
