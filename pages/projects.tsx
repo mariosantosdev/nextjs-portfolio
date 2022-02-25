@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
@@ -7,8 +7,6 @@ import Header from '../components/Navbar/ProjectsHeader';
 import api from '../services/api';
 import SimplePost from '../components/Post';
 import Head from '../components/Head';
-import Link from 'next/link';
-import Image from 'next/image';
 
 type Post = {
   id: string;
@@ -24,11 +22,8 @@ type Post = {
 };
 
 export default function Home({ postsAPI }) {
-  const headerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [posts] = useState<Post[]>(postsAPI || []);
-
-  console.log(`${headerRef.current?.children[0].clientHeight}px`);
 
   return (
     <Fragment>
