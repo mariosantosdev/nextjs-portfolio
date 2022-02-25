@@ -1,12 +1,14 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
 import { PublicFooter } from '../components/Footer';
-import Header from '../components/Navbar/PublicHeader';
+import Header from '../components/Navbar/ProjectsHeader';
 import api from '../services/api';
 import SimplePost from '../components/Post';
 import Head from '../components/Head';
+import Link from 'next/link';
+import Image from 'next/image';
 
 type Post = {
   id: string;
@@ -22,52 +24,60 @@ type Post = {
 };
 
 export default function Home({ postsAPI }) {
+  const headerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [posts] = useState<Post[]>(postsAPI || []);
+
+  console.log(`${headerRef.current?.children[0].clientHeight}px`);
 
   return (
     <Fragment>
       <Head title="Projetos | Mário Santos" path={router.asPath} />
 
-      <Header />
-
-      <main className="flex flex-col items-center justify-center p-4 bg-indigo-900">
-        <div className="flex justify-center w-full max-w-5xl md:justify-start">
-          <h1 className="mb-4 text-2xl text-center text-white md:text-left md:text-6xl">
+      <div className="flex flex-col w-full h-screen bg-gray-200">
+        <Header />
+        <div className="flex flex-col items-center w-full h-full max-w-5xl py-4 mx-auto md:px-4">
+          {/* Texts */}
+          <h1 className="my-2 text-2xl text-center text-black md:text-4xl">
             Projetos
           </h1>
-        </div>
+          <p className="text-sm md:text-lg text-slate-500">
+            Veja alguns dos projetos criados por mim!
+          </p>
 
-        <div className="flex flex-col w-full max-w-5xl">
-          <div className="flex flex-col flex-wrap items-center justify-center w-full h-full min-h-screen md:flex-row md:px-0">
-            {posts.length > 0 ? (
-              posts.map((post) => (
-                <SimplePost
-                  key={post.id}
-                  post={post}
-                  onClick={() => router.push(`/project/${post.id}`)}
-                />
-              ))
-            ) : (
-              <span className="flex flex-col text-xl text-center text-white md:text-4xl">
-                <p>Desculpe, parece que não existe nenhum projeto público...</p>
-                <p>
-                  Considere visitar meu{' '}
-                  <a
-                    href="http://github.com/mariosantosdev"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline"
-                  >
-                    GitHub
-                  </a>
-                  , para ver projetos diversos!
-                </p>
-              </span>
-            )}
+          <div className="flex flex-col w-full max-w-5xl">
+            <div className="flex flex-col flex-wrap items-center justify-center w-full md:flex-row md:px-0">
+              {posts.length > 0 ? (
+                posts.map((post) => (
+                  <SimplePost
+                    key={post.id}
+                    post={post}
+                    onClick={() => router.push(`/project/${post.id}`)}
+                  />
+                ))
+              ) : (
+                <span className="flex flex-col text-xl text-center text-white md:text-4xl">
+                  <p>
+                    Desculpe, parece que não existe nenhum projeto público...
+                  </p>
+                  <p>
+                    Considere visitar meu{' '}
+                    <a
+                      href="http://github.com/mariosantosdev"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline"
+                    >
+                      GitHub
+                    </a>
+                    , para ver projetos diversos!
+                  </p>
+                </span>
+              )}
+            </div>
           </div>
         </div>
-      </main>
+      </div>
 
       <PublicFooter />
     </Fragment>
