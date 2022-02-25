@@ -18,18 +18,13 @@ export default function Home({ postsAPI }) {
   const router = useRouter();
   const [posts] = useState<Post[]>(postsAPI || []);
 
-  function scrollToTop(target: MutableRefObject<HTMLDivElement>) {
-    window.scroll({ top: 0, left: 0, behavior: 'smooth' });
-    target.current.scroll({ top: 0, left: 0, behavior: 'smooth' });
-  }
-
   return (
     <div
       ref={divRef}
       className="h-screen overflow-scroll snap-y snap-mandatory scroll-smooth"
       onScroll={() => onScroll(divRef)}
     >
-      <ScrollActionSheet onClick={scrollToTop} target={divRef} />
+      <ScrollActionSheet target={divRef} />
       <Head
         title="Mário Santos - Desenvolvedor Mobile, Web, Backend"
         path={router.asPath}
