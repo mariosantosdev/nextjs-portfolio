@@ -64,9 +64,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         switch (req.method) {
             case 'GET':
                 const { limit } = req.query;
-                const limitToFetch = Number(
-                typeof limit === 'string' ? limit : limit[0]
-                );
+                const limitToFetch =
+                        limit && Number(typeof limit === 'string' ? limit : limit[0])
                 const posts = await getPosts(limitToFetch);
                 res.status(200).json({ posts });
                 break;
