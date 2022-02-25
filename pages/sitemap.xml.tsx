@@ -9,9 +9,6 @@ function generateSiteMap(posts) {
        <loc>${DATA_URL}/</loc>
      </url>
      <url>
-       <loc>${DATA_URL}/contact</loc>
-     </url>
-     <url>
        <loc>${DATA_URL}/projects</loc>
      </url>
 
