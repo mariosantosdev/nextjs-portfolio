@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { useRef, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -8,6 +8,7 @@ import Header from '../../components/Navbar/PublicHeader';
 import api from '../../services/api';
 import GhostLinkButton from '../../components/Button/GhostLinkButton';
 import Head from '../../components/Head';
+import ScrollActionSheet from '../../components/ScrollActionSheet';
 
 type Post = {
   id: string;
@@ -23,16 +24,19 @@ type Post = {
 };
 
 export default function Project({ postsAPI }) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [post] = useState<Post>(postsAPI || null);
 
   if (!post) return null;
 
   return (
-    <Fragment>
+    <div ref={containerRef} className="scroll-smooth">
       <Head title={`${post.title} | Mário Santos`} path={router.asPath} />
 
       <Header />
+
+      <ScrollActionSheet target={containerRef} />
 
       {/* Cover Header */}
       <div className="relative w-full h-screen bg-center bg-no-repeat bg-cover">
@@ -43,7 +47,7 @@ export default function Project({ postsAPI }) {
           objectFit="cover"
           priority
         />
-        <div className="relative flex flex-col items-center justify-center w-full h-full space-y-4 backdrop-brightness-[.30] backdrop-blur-sm">
+        <div className="relative flex flex-col items-center justify-center w-full h-full space-y-4 backdrop-brightness-[.40] backdrop-blur-sm">
           <p className="text-2xl font-bold text-white md:text-4xl">
             Projeto - <span className="text-indigo-500">{post.title}</span>
           </p>
@@ -65,9 +69,9 @@ export default function Project({ postsAPI }) {
       {/* About Section */}
       <section
         id="description"
-        className="flex justify-center px-4 bg-gray-200"
+        className="flex justify-center h-[80vh] px-4 bg-gray-200"
       >
-        <div className="flex flex-col w-full max-w-5xl py-4 lg:space-x-4 lg:flex-row md:max-h-96">
+        <div className="flex flex-col w-full max-w-5xl py-4 lg:space-x-4 lg:flex-row md:max-h-[80vh]">
           {/* Description */}
           <main className="flex flex-col lg:w-full">
             <h1 className="mb-4 text-2xl text-gray-800 md:text-4xl">
@@ -111,7 +115,7 @@ export default function Project({ postsAPI }) {
       <section></section>
 
       <PublicFooter />
-    </Fragment>
+    </div>
   );
 }
 
