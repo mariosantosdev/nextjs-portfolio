@@ -91,7 +91,7 @@ export default function Home({ postsAPI }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await api.get<{ posts: Post[] }>('/api/post');
+  const { data } = await api.get<{ posts: Post[] }>('/api/post?limit=6');
   return {
     props: {
       postsAPI: data.posts.filter((post) => post.published === true),
