@@ -3,7 +3,6 @@ import { FiArrowUp } from 'react-icons/fi';
 
 interface IScrollActionSheet {
   target: MutableRefObject<HTMLDivElement>;
-  onClick: (target: MutableRefObject<HTMLDivElement>) => void;
 }
 
 export function onScroll(target: MutableRefObject<HTMLDivElement>) {
@@ -18,14 +17,16 @@ export function onScroll(target: MutableRefObject<HTMLDivElement>) {
   }
 }
 
-export default function ScrollActionSheet({
-  target,
-  onClick,
-}: IScrollActionSheet) {
+export default function ScrollActionSheet({ target }: IScrollActionSheet) {
+  function scrollToTop() {
+    window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+    target.current.scroll({ top: 0, left: 0, behavior: 'smooth' });
+  }
+
   return (
     <button
       id="btn_scroll_action_sheet"
-      onClick={() => onClick(target)}
+      onClick={scrollToTop}
       className="absolute z-50 hidden p-4 bg-indigo-500 rounded-full shadow-2xl cursor-pointer shadow-black bottom-8 right-8"
     >
       <FiArrowUp className="text-white" />
