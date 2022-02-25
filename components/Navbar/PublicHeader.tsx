@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { useState } from "react";
+import Link from 'next/link';
+import { useState } from 'react';
 import {
   AiFillInstagram,
   AiOutlineTwitter,
@@ -7,14 +7,14 @@ import {
   AiFillGithub,
   AiOutlineMenu,
   AiOutlineClose,
-} from "react-icons/ai";
-import { motion, AnimatePresence } from "framer-motion";
+} from 'react-icons/ai';
+import { motion, AnimatePresence } from 'framer-motion';
 
-import PageLink, { IPropsPageLink } from "./PageLink";
+import PageLink, { IPropsPageLink } from './PageLink';
 
 function Logo() {
   return (
-    <div className="flex flex-col w-full md:w-1/3">
+    <div className="flex flex-col w-full lg:w-1/3">
       <p className="text-xl font-medium text-white">Mário Santos</p>
       <p className="text-sm italic text-white md:text-md">
         Desenvolvedor Mobile e Full-Stack
@@ -25,8 +25,8 @@ function Logo() {
 
 function SocialMedias() {
   return (
-    <div className="flex flex-col md:flex-row h-min md:w-1/3">
-      <ul className="flex flex-row items-center justify-center w-full py-0 md:justify-end md:py-4">
+    <div className="flex flex-col lg:flex-row h-min lg:w-1/3">
+      <ul className="flex flex-row items-center justify-center w-full py-0 lg:justify-end lg:py-4">
         {/* Instagram Button */}
         <li>
           <Link href="https://www.instagram.com/mariosantos.dev/">
@@ -83,26 +83,23 @@ export default function Header() {
   const [showMenu, setShowMenu] = useState(false);
 
   const pages: IPropsPageLink[] = [
-    { title: "Inicio", path: "/" },
-    { title: "Sobre", path: "#about" },
-    { title: "Projetos", path: "#projects" },
-    { title: "Contato", path: "#contact" },
+    { title: 'Inicio', path: '/' },
+    { title: 'Sobre', path: '#about' },
+    { title: 'Projetos', path: '#projects' },
+    { title: 'Contato', path: '#contact' },
   ];
 
   return (
     <header
       className={`${
-        showMenu ? "h-screen fixed z-50 bg-opacity-100" : "bg-opacity-70"
-      } md:absolute z-10 flex flex-col w-screen p-4 md:flex-row bg-black md:bg-opacity-30`}
+        showMenu ? 'h-screen fixed z-50 bg-opacity-100' : 'bg-opacity-70'
+      } lg:absolute z-10 flex flex-col w-screen p-4 lg:flex-row bg-black lg:bg-opacity-30`}
     >
       {/* SmallScreen Version */}
-      <div className="flex flex-row md:hidden">
+      <div className="flex flex-row lg:hidden">
         <Logo />
 
-        <button
-          className="md:hidden"
-          onClick={() => setShowMenu((prev) => !prev)}
-        >
+        <button onClick={() => setShowMenu((prev) => !prev)}>
           <AnimatePresence>
             {!showMenu ? (
               <motion.div
@@ -122,7 +119,7 @@ export default function Header() {
       </div>
 
       <div
-        className={`${showMenu ? "flex" : "hidden"} flex-col md:hidden h-full`}
+        className={`${showMenu ? 'flex' : 'hidden'} flex-col lg:hidden h-full`}
       >
         <div className="h-full py-4">
           <ul className="flex flex-col items-center h-full pt-4 space-y-4">
@@ -136,7 +133,7 @@ export default function Header() {
       </div>
 
       {/* LargeScreen Version */}
-      <div className="hidden w-full md:flex">
+      <div className="hidden w-full lg:flex">
         <Logo />
 
         <div className="w-1/3">
