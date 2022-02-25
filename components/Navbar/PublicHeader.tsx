@@ -84,9 +84,9 @@ export default function Header() {
 
   const pages: IPropsPageLink[] = [
     { title: 'Inicio', path: '/' },
-    { title: 'Sobre', path: '#about' },
-    { title: 'Projetos', path: '#projects' },
-    { title: 'Contato', path: '#contact' },
+    { title: 'Sobre', path: '/#about' },
+    { title: 'Projetos', path: '/#projects' },
+    { title: 'Contato', path: '/#contact' },
   ];
 
   return (
