@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { useRef, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
@@ -7,6 +7,7 @@ import Header from '../components/Navbar/ProjectsHeader';
 import api from '../services/api';
 import SimplePost from '../components/Post';
 import Head from '../components/Head';
+import ScrollActionSheet from '../components/ScrollActionSheet';
 
 type Post = {
   id: string;
@@ -22,12 +23,15 @@ type Post = {
 };
 
 export default function Home({ postsAPI }) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [posts] = useState<Post[]>(postsAPI || []);
 
   return (
-    <Fragment>
+    <div ref={containerRef} className="scroll-smooth">
       <Head title="Projetos | Mário Santos" path={router.asPath} />
+
+      <ScrollActionSheet target={containerRef} />
 
       <div className="flex flex-col w-full h-screen bg-gray-200">
         <Header />
@@ -75,7 +79,7 @@ export default function Home({ postsAPI }) {
       </div>
 
       <PublicFooter />
-    </Fragment>
+    </div>
   );
 }
 
