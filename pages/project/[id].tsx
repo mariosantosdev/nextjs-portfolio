@@ -50,7 +50,7 @@ export default function Project({ postsAPI }) {
         />
         <div className="relative flex flex-col items-center justify-center w-full h-full space-y-4 backdrop-brightness-[.40] backdrop-blur-sm">
           <p className="text-2xl font-bold text-white md:text-4xl">
-            Projeto - <span className="text-indigo-500">{post.title}</span>
+            Projeto - <span className="text-indigo-700">{post.title}</span>
           </p>
           <div className="absolute flex flex-col items-center space-y-4 md:space-y-0 md:bottom-4 md:flex-row bottom-2 md:space-x-4">
             {post.link && (
@@ -103,7 +103,7 @@ export default function Project({ postsAPI }) {
               {post.technologies.map((technology) => (
                 <p
                   key={technology}
-                  className="text-gray-700 hover:text-indigo-400"
+                  className="text-gray-700 cursor-default hover:text-indigo-400"
                 >
                   &#8618; {technology}
                 </p>
@@ -112,8 +112,6 @@ export default function Project({ postsAPI }) {
           </aside>
         </div>
       </section>
-
-      <section></section>
 
       <PublicFooter />
     </div>
