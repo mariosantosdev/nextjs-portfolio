@@ -191,6 +191,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { data } = await api.get(`/api/post/${id}`);
 
   return {
+    notFound: !Boolean(data.post),
     props: { post: data.post },
   };
 };
