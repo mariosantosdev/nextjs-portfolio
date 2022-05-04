@@ -55,14 +55,16 @@ export default function EditPost({ post }: IEditPostProps) {
   }
 
   async function onDeletePost(id: string) {
-    try {
-      await deleteImage(post.cover);
-      await api.delete(`/api/post/${id}`);
+    if (confirm('Você tem certeza que deseja deletar esta postagem?')) {
+      try {
+        await deleteImage(post.cover);
+        await api.delete(`/api/post/${id}`);
 
-      router.push('/admin');
-      alert('Post deletado com sucesso');
-    } catch (error: any) {
-      alert('Ocorreu um erro ao deletar este post.');
+        router.push('/admin');
+        alert('Post deletado com sucesso');
+      } catch (error: any) {
+        alert('Ocorreu um erro ao deletar este post.');
+      }
     }
   }
 
