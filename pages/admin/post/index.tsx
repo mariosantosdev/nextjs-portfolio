@@ -1,7 +1,8 @@
+import Head from 'next/head';
 import { Fragment } from 'react';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
-import Head from 'next/head';
+import { toast } from 'react-toastify';
 
 import Header from '../../../components/Navbar/Header';
 import Footer from '../../../components/Footer';
@@ -9,6 +10,7 @@ import Sidebar from '../../../components/Navbar/Sidebar';
 import api from '../../../services/api';
 import PostForms from '../../../components/Forms/Post';
 import { uploadImage } from '../../../utils/firebase';
+import { useRouter } from 'next/router';
 
 type PostsData = {
   title: string;
@@ -20,17 +22,44 @@ type PostsData = {
 };
 
 export default function CreatePost() {
+  const router = useRouter();
+
   async function onSend(post: PostsData, file: File) {
-    try {
-      const fileURL = await uploadImage(file);
+    const promiseUploadImage = uploadImage(file);
+    const fileURL = await toast.promise(
+      promiseUploadImage,
+      {
+        success: 'Imagem enviada com sucesso.',
+        pending: 'Enviando imagem.',
+        error: {
+          render({ data }) {
+            console.error(data.error);
+            return 'Ocorreu um erro ao enviar esta imagem.';
+          },
+        },
+      },
+      { autoClose: 2000, toastId: 'toast-upload-image' }
+    );
 
-      const data = { ...post, fileURL };
+    const data = { ...post, fileURL };
 
-      await api.post('/api/post', data);
-      alert('Post criado com sucesso.');
-    } catch (error: any) {
-      alert('Ocorreu um erro ao criar este post.');
-    }
+    const promiseCreatePost = api.post('/api/post', data);
+    await toast.promise(
+      promiseCreatePost,
+      {
+        success: 'Post criado com suceesso.',
+        pending: 'Criando post.',
+        error: {
+          render({ data }) {
+            console.error(data.error);
+            return 'Ocorreu um erro ao criar esta postagem.';
+          },
+        },
+      },
+      { autoClose: 2000, toastId: 'toast-create-post' }
+    );
+
+    router.push('/admin');
   }
 
   return (

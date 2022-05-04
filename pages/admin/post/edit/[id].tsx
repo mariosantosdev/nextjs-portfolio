@@ -1,7 +1,8 @@
+import Head from 'next/head';
 import { Fragment } from 'react';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
-import Head from 'next/head';
+import { toast } from 'react-toastify';
 
 import Header from '../../../../components/Navbar/Header';
 import Footer from '../../../../components/Footer';
@@ -38,31 +39,111 @@ interface IEditPostProps {
 export default function EditPost({ post }: IEditPostProps) {
   const router = useRouter();
 
+  function uploadNewImage(cover: File) {
+    return new Promise<string>(async (resolve, reject) => {
+      try {
+        const promiseUploadImage = uploadImage(cover);
+        const fileURL = await toast.promise(
+          promiseUploadImage,
+          {
+            success: 'Imagem enviada com sucesso.',
+            pending: 'Enviando imagem.',
+            error: {
+              render({ data }) {
+                console.error(data.error);
+                return 'Ocorreu um erro ao enviar esta imagem.';
+              },
+            },
+          },
+          { autoClose: 2000, toastId: 'toast-upload-image' }
+        );
+
+        resolve(fileURL);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  function deleteOldImage(coverURL: string) {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        const promiseDeleteImage = deleteImage(coverURL);
+        await toast.promise(
+          promiseDeleteImage,
+          {
+            success: 'Imagem deletada com sucesso.',
+            pending: 'Deletando imagem.',
+            error: {
+              render({ data }) {
+                console.error(data.error);
+                return 'Ocorreu um erro ao deletar esta imagem.';
+              },
+            },
+          },
+          { autoClose: 2000, toastId: 'toast-delete-image' }
+        );
+
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   async function onUpdatePost(data: PostsData, file?: File) {
     try {
       let cover: string;
 
       if (file) {
-        await deleteImage(post.cover);
-        cover = await uploadImage(file);
+        await deleteOldImage(post.cover);
+        cover = await uploadNewImage(file);
       }
 
-      await api.put(`/api/post/${post.id}`, { ...data, cover });
-      alert('Post atualizado com sucesso.');
+      const promiseUpdatePost = api.put(`/api/post/${post.id}`, {
+        ...data,
+        cover,
+      });
+      await toast.promise(
+        promiseUpdatePost,
+        {
+          success: 'Post atualizado com sucesso.',
+          pending: 'Atualizando post.',
+          error: {
+            render({ data }) {
+              console.error(data.error);
+              return 'Ocorreu um erro ao atualizar este post.';
+            },
+          },
+        },
+        { autoClose: 2000, toastId: 'toast-update-post' }
+      );
     } catch (error: any) {
-      alert('Ocorreu um erro ao editar este post.');
+      console.error(error);
     }
   }
 
   async function onDeletePost(id: string) {
-    try {
-      await deleteImage(post.cover);
-      await api.delete(`/api/post/${id}`);
+    if (confirm('Você tem certeza que deseja deletar esta postagem?')) {
+      await deleteOldImage(post.cover);
+
+      const promiseDeletePost = api.delete(`/api/post/${id}`);
+      await toast.promise(
+        promiseDeletePost,
+        {
+          success: 'Post deletado com sucesso.',
+          pending: 'Deletando post.',
+          error: {
+            render({ data }) {
+              console.error(data.error);
+              return 'Ocorreu um erro ao deletar este post.';
+            },
+          },
+        },
+        { autoClose: 2000, toastId: 'toast-delete-post' }
+      );
 
       router.push('/admin');
-      alert('Post deletado com sucesso');
-    } catch (error: any) {
-      alert('Ocorreu um erro ao deletar este post.');
     }
   }
 
