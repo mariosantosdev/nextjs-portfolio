@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import ReactHtmlParser from 'html-react-parser';
 
 import { PublicFooter } from '../../components/Footer';
 import Header from '../../components/Navbar/PublicHeader';
@@ -81,7 +82,7 @@ export default function Project({ postsAPI }) {
 
             <span className="flex flex-col space-y-4 overflow-y-auto text-md md:text-xl">
               {post.content ? (
-                <p>{post.content}</p>
+                <p>{ReactHtmlParser(post.content)}</p>
               ) : (
                 <p className="italic text-gray-400">
                   Não foi adicionado nenhuma descrição a este projeto!
