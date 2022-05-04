@@ -43,6 +43,7 @@ export default function Project({ postsAPI }) {
         <Image
           src={post.cover}
           alt={post.title}
+          className="blur-sm brightness-50"
           layout="fill"
           objectFit="cover"
           priority
