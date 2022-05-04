@@ -54,7 +54,7 @@ export default function ContactSession() {
 
             <ul className="flex flex-row justify-center space-x-4 md:space-x-0 md:space-y-2 md:flex-col">
               <a
-                href="http://instagram.com/mariosantosdev"
+                href="https://www.instagram.com/mariosantos.dev"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex flex-row items-center space-x-1 text-gray-700 hover:underline"
