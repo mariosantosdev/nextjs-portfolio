@@ -127,7 +127,7 @@ export default function PostForms(props: IPostForms) {
 
   return (
     <form
-      className="items-center w-full max-w-lg mx-auto"
+      className="items-center w-full max-w-2xl mx-auto"
       onSubmit={handleSubmit}
     >
       {/* TITLE INPUT */}
