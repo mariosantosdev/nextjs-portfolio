@@ -20,7 +20,7 @@ function getPathStorageFromUrl(url: string) {
   imagePath = imagePath.substring(0, indexOfEndPath);
   imagePath = imagePath.replace('%2F', '/');
 
-  return imagePath;
+  return decodeURIComponent(imagePath);
 }
 
 export function uploadImage(file: File) {
