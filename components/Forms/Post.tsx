@@ -125,8 +125,6 @@ export default function PostForms(props: IPostForms) {
     if (onUpdate) return handleUpdatePost();
   }
 
-  useEffect(() => console.log(description), [description]);
-
   return (
     <form
       className="items-center w-full max-w-lg mx-auto"
