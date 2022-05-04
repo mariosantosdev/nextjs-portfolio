@@ -124,6 +124,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { data } = await api.get<{ post: Post }>(`/api/post/${id}`);
 
   return {
+    notFound: !Boolean(data.post),
     props: { postsAPI: data.post },
   };
 };
