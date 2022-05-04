@@ -93,7 +93,7 @@ export default function Header() {
     <header
       className={`${
         showMenu ? 'h-screen fixed z-50 bg-opacity-100' : 'bg-opacity-70'
-      } lg:absolute z-10 flex flex-col w-screen p-4 lg:flex-row bg-black lg:bg-opacity-30`}
+      } lg:absolute z-10 flex flex-col w-full p-4 lg:flex-row bg-black lg:bg-opacity-30`}
     >
       {/* SmallScreen Version */}
       <div className="flex flex-row lg:hidden">
