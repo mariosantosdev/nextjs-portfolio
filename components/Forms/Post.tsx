@@ -51,7 +51,7 @@ export default function PostForms(props: IPostForms) {
   const [title, setTitle] = useState(post?.title || '');
   const [projectURL, setProjectURL] = useState(post?.link || '');
   const [repoURL, setRepoURL] = useState(post?.repository || '');
-  const [isVisible, setIsVisible] = useState<boolean>(post?.published || true);
+  const [isVisible, setIsVisible] = useState<boolean>(post?.published ?? true);
   const [file, setFile] = useState<File>();
   const [urlImage, setUrlImage] = useState<string>(post?.cover || null);
   const [technologies, setTechnologies] = useState<string[]>(
