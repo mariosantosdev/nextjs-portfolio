@@ -9,7 +9,12 @@ import Footer from '../../../../components/Footer';
 import Sidebar from '../../../../components/Navbar/Sidebar';
 import api, { createApiConnector } from '../../../../services/api';
 import PostForms from '../../../../components/Forms/Post';
-import { deleteImage, uploadImage } from '../../../../utils/firebase';
+import {
+  deleteImage,
+  deleteMultiImages,
+  uploadImage,
+  uploadMultiImages,
+} from '../../../../utils/firebase';
 import { useRouter } from 'next/router';
 
 type PostsData = {
@@ -19,6 +24,7 @@ type PostsData = {
   isVisible: boolean;
   technologies: string[];
   description: string;
+  images: string[];
 };
 
 type PostFromDB = {
@@ -30,6 +36,7 @@ type PostFromDB = {
   published: boolean;
   cover: string;
   technologies: string[];
+  images: string[];
 };
 
 interface IEditPostProps {
@@ -91,18 +98,84 @@ export default function EditPost({ post }: IEditPostProps) {
     });
   }
 
-  async function onUpdatePost(data: PostsData, file?: File) {
+  function handleDeleteMultiImages(urls: string[]) {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        const promiseDeleteImage = deleteMultiImages(urls);
+        await toast.promise(
+          promiseDeleteImage,
+          {
+            success: 'Imagens de demonstração deletada com sucesso.',
+            pending: 'Deletando imagens de demonstração.',
+            error: {
+              render({ data }) {
+                console.error(data.error);
+                return 'Ocorreu um erro ao deletar alguma imagem de demonstraçãp.';
+              },
+            },
+          },
+          { autoClose: 2000, toastId: 'toast-delete-multi-image' }
+        );
+
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async function onUpdatePost(
+    data: PostsData,
+    file?: File,
+    imagesAlreadyUpload: string[] = [],
+    imagesToUpload: File[] = [],
+    imagesToDelete: string[] = []
+  ) {
     try {
       let cover: string;
+      let images: string[] = Array.from(imagesAlreadyUpload ?? []);
+      let imagesUploadURL: string[] = [];
 
       if (file) {
         await deleteOldImage(post.cover);
         cover = await uploadNewImage(file);
       }
 
+      if (imagesToDelete.length) {
+        await handleDeleteMultiImages(imagesToDelete);
+
+        imagesToDelete.forEach((deletedImage) => {
+          const indexDeletedImage = images.findIndex(
+            (imageInDB) => imageInDB === deletedImage
+          );
+          if (indexDeletedImage < 0) return;
+
+          images.splice(indexDeletedImage, 1);
+        });
+      }
+
+      if (imagesToUpload.length) {
+        const promiseUploadMultiImages = uploadMultiImages(imagesToUpload);
+        imagesUploadURL = await toast.promise(
+          promiseUploadMultiImages,
+          {
+            success: 'Imagens de demonstração enviadas com sucesso.',
+            pending: 'Enviando imagens de demonstração.',
+            error: {
+              render({ data }) {
+                console.error(data.error);
+                return 'Ocorreu um erro ao enviar alguma imagem de demonstração.';
+              },
+            },
+          },
+          { autoClose: 2000, toastId: 'toast-upload-multi-image' }
+        );
+      }
+
       const promiseUpdatePost = api.put(`/api/post/${post.id}`, {
         ...data,
         cover,
+        images: images.concat(imagesUploadURL),
       });
       await toast.promise(
         promiseUpdatePost,
@@ -126,6 +199,8 @@ export default function EditPost({ post }: IEditPostProps) {
   async function onDeletePost(id: string) {
     if (confirm('Você tem certeza que deseja deletar esta postagem?')) {
       await deleteOldImage(post.cover);
+
+      await handleDeleteMultiImages(post.images);
 
       const promiseDeletePost = api.delete(`/api/post/${id}`);
       await toast.promise(

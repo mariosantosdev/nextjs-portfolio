@@ -37,10 +37,18 @@ type PostFromDB = {
   published: boolean;
   cover: string;
   technologies: string[];
+  images: string[];
 };
 
 interface IPostForms {
   onSend?: (post: PostsData, file: File, images: File[]) => Promise<void>;
+  onUpdate?: (
+    post: PostsUpdateData,
+    file?: File,
+    imagesAlreadyUpload?: string[],
+    imagesToUpload?: File[],
+    imagesToDelete?: string[]
+  ) => Promise<void>;
   onDelete?: (id: string) => Promise<void>;
   post?: PostFromDB;
 }
@@ -62,6 +70,8 @@ export default function PostForms(props: IPostForms) {
   const [images, setImages] = useState<any[]>(
     post?.images ? Array.from(post.images) : []
   );
+  const [imagesToDelete, setImagesToDelete] = useState<string[]>([]);
+
   const handleChangeFile = (files: FileList) => {
     if (files.length <= 0) return;
 
@@ -111,7 +121,7 @@ export default function PostForms(props: IPostForms) {
     ) {
       cloneImages.splice(index, 1);
       setImages(cloneImages);
-      if (alreadyUpload) setDeleteImagesURL((prev) => prev.concat(image));
+      if (alreadyUpload) setImagesToDelete((prev) => prev.concat(image));
     }
   }
 
@@ -123,7 +133,7 @@ export default function PostForms(props: IPostForms) {
       );
 
       setImages([]);
-      setDeleteImagesURL(imagesAlreadyUpload);
+      setImagesToDelete(imagesAlreadyUpload);
     }
   }
 
@@ -142,7 +152,7 @@ export default function PostForms(props: IPostForms) {
     );
   }
 
-  function handleUpdatePost() {
+  async function handleUpdatePost() {
     let data: PostsUpdateData = {};
 
     if (title !== post.title) data = { ...data, title };
@@ -154,7 +164,18 @@ export default function PostForms(props: IPostForms) {
 
     const fileToUpload = !urlImage && file && file;
 
-    onUpdate(data, fileToUpload);
+    const imagesToUpload = images.filter((image) => typeof image === 'object');
+    const imagesAlreadyUpload = images.filter(
+      (images) => typeof images === 'string'
+    );
+
+    onUpdate(
+      data,
+      fileToUpload,
+      imagesAlreadyUpload,
+      imagesToUpload,
+      imagesToDelete
+    );
   }
 
   function handleSubmit(e: FormEvent) {
