@@ -10,6 +10,7 @@ import api from '../../services/api';
 import GhostLinkButton from '../../components/Button/GhostLinkButton';
 import Head from '../../components/Head';
 import ScrollActionSheet from '../../components/ScrollActionSheet';
+import GallerySection from '../../components/Gallery';
 
 type Post = {
   id: string;
@@ -20,6 +21,7 @@ type Post = {
   published: boolean;
   cover: string;
   technologies: string[];
+  images: string[];
   createdAt: string;
   updatedAt: string;
 };
@@ -71,7 +73,7 @@ export default function Project({ postsAPI }) {
       {/* About Section */}
       <section
         id="description"
-        className="flex justify-center h-[80vh] px-4 bg-gray-200"
+        className="flex justify-center px-4 pb-10 bg-gray-200"
       >
         <div className="flex flex-col w-full max-w-5xl py-4 lg:space-x-4 lg:flex-row md:max-h-[80vh]">
           {/* Description */}
@@ -113,6 +115,9 @@ export default function Project({ postsAPI }) {
           </aside>
         </div>
       </section>
+
+      {/* Gallery Section */}
+      <GallerySection images={post.images} />
 
       <PublicFooter />
     </div>
