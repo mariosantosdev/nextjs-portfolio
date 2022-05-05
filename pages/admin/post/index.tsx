@@ -9,7 +9,7 @@ import Footer from '../../../components/Footer';
 import Sidebar from '../../../components/Navbar/Sidebar';
 import api from '../../../services/api';
 import PostForms from '../../../components/Forms/Post';
-import { uploadImage } from '../../../utils/firebase';
+import { uploadImage, uploadMultiImages } from '../../../utils/firebase';
 import { useRouter } from 'next/router';
 
 type PostsData = {
@@ -19,12 +19,13 @@ type PostsData = {
   isVisible: boolean;
   technologies: string[];
   description: string;
+  images: string[];
 };
 
 export default function CreatePost() {
   const router = useRouter();
 
-  async function onSend(post: PostsData, file: File) {
+  async function onSend(post: PostsData, file: File, images: File[]) {
     const promiseUploadImage = uploadImage(file);
     const fileURL = await toast.promise(
       promiseUploadImage,
@@ -41,7 +42,26 @@ export default function CreatePost() {
       { autoClose: 2000, toastId: 'toast-upload-image' }
     );
 
-    const data = { ...post, fileURL };
+    let imagesURL = [];
+    if (images.length) {
+      const promiseUploadMultiImages = uploadMultiImages(images);
+      imagesURL = await toast.promise(
+        promiseUploadMultiImages,
+        {
+          success: 'Imagens enviadas com sucesso.',
+          pending: 'Enviando imagens de demonstração.',
+          error: {
+            render({ data }) {
+              console.error(data.error);
+              return 'Ocorreu um erro ao enviar alguma imagem de demonstração.';
+            },
+          },
+        },
+        { autoClose: 2000, toastId: 'toast-upload-multi-image' }
+      );
+    }
+
+    const data = { ...post, fileURL, images: imagesURL };
 
     const promiseCreatePost = api.post('/api/post', data);
     await toast.promise(

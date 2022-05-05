@@ -1,8 +1,9 @@
 import Image from 'next/image';
-import { FormEvent, useState, KeyboardEvent, useRef, useEffect } from 'react';
+import { FormEvent, useState, KeyboardEvent } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 import dynamic from 'next/dynamic';
+import UploadImage from '../UploadImage';
 const importJodit = () => import('jodit-react');
 
 const JoditEditor = dynamic(importJodit, {
@@ -39,8 +40,7 @@ type PostFromDB = {
 };
 
 interface IPostForms {
-  onSend?: (post: PostsData, file: File) => Promise<void>;
-  onUpdate?: (post: PostsUpdateData, file?: File) => Promise<void>;
+  onSend?: (post: PostsData, file: File, images: File[]) => Promise<void>;
   onDelete?: (id: string) => Promise<void>;
   post?: PostFromDB;
 }
@@ -59,6 +59,9 @@ export default function PostForms(props: IPostForms) {
   );
   const [description, setDescription] = useState(post?.content || '');
 
+  const [images, setImages] = useState<any[]>(
+    post?.images ? Array.from(post.images) : []
+  );
   const handleChangeFile = (files: FileList) => {
     if (files.length <= 0) return;
 
@@ -89,6 +92,41 @@ export default function PostForms(props: IPostForms) {
     }
   };
 
+  function handleChangeMultiImages(files: File[]) {
+    if (files.length <= 0) return;
+
+    setImages((prev) => prev.concat([...files]));
+  }
+
+  function deleteImage(index: number) {
+    const cloneImages = [...images];
+    if (!cloneImages[index]) return;
+
+    const image = cloneImages[index];
+    const imageName = image.name;
+    const alreadyUpload = typeof image === 'string';
+
+    if (
+      confirm(`Você tem certeza que deseja apagar a imagem "${imageName}" ?`)
+    ) {
+      cloneImages.splice(index, 1);
+      setImages(cloneImages);
+      if (alreadyUpload) setDeleteImagesURL((prev) => prev.concat(image));
+    }
+  }
+
+  function clearImages() {
+    if (confirm('Você deseja apagar TODAS as images?')) {
+      const cloneImages = [...images];
+      const imagesAlreadyUpload = cloneImages.filter(
+        (image) => typeof image === 'string'
+      );
+
+      setImages([]);
+      setDeleteImagesURL(imagesAlreadyUpload);
+    }
+  }
+
   function handleCreatePost() {
     if (!title.trim()) return alert('O campo título deve ser preenchido.');
     if (isVisible === undefined)
@@ -99,7 +137,8 @@ export default function PostForms(props: IPostForms) {
 
     onSend(
       { title, projectURL, repoURL, isVisible, technologies, description },
-      file
+      file,
+      images
     );
   }
 
@@ -270,6 +309,21 @@ export default function PostForms(props: IPostForms) {
           <p className="text-xs italic text-gray-600 transition-colors duration-500 dark:text-white">
             Separe as tecnologias por uma vírgula
           </p>
+        </div>
+      </div>
+
+      {/* UPLOAD IMAGE */}
+      <div className="flex flex-wrap mb-6 -mx-3">
+        <div className="w-full px-3">
+          <label className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase transition-colors duration-500 dark:text-white">
+            Imagens
+          </label>
+          <UploadImage
+            images={images}
+            onChange={handleChangeMultiImages}
+            onDelete={deleteImage}
+            onClear={clearImages}
+          />
         </div>
       </div>
 

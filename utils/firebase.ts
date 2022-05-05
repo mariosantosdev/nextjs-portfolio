@@ -67,3 +67,55 @@ export function deleteImage(url: string) {
     }
   });
 }
+
+export function uploadMultiImages(files: File[], path: string = 'images/') {
+  const app = initFirebase();
+
+  return new Promise<string[]>(async (resolve, reject) => {
+    try {
+      const storage = getStorage(app);
+      let linkImages: string[] = [];
+
+      for (const file of files) {
+        // create a storage ref
+        const storageRef = ref(storage, path + file.name);
+
+        // upload file
+        const metadata: UploadMetadata = { contentType: file.type };
+        const snapshot = await uploadBytes(storageRef, file, metadata);
+
+        const downloadURL = await getDownloadURL(snapshot.ref);
+        linkImages.push(downloadURL);
+      }
+
+      resolve(linkImages);
+    } catch (error: any) {
+      reject(error);
+    }
+  });
+}
+
+export function deleteMultiImages(urls: string[]) {
+  const app = initFirebase();
+
+  return new Promise<void>(async (resolve, reject) => {
+    try {
+      for (const url of urls) {
+        const pathOldImage = getPathStorageFromUrl(url);
+        const storage = getStorage(app);
+
+        if (pathOldImage) {
+          const storageRef = ref(storage, pathOldImage);
+
+          await deleteObject(storageRef);
+        } else {
+          reject('Não foi encontrado imagem para deletar.');
+        }
+      }
+
+      resolve();
+    } catch (error: any) {
+      reject(error);
+    }
+  });
+}
