@@ -103,7 +103,7 @@ export default function PostForms(props: IPostForms) {
     if (!cloneImages[index]) return;
 
     const image = cloneImages[index];
-    const imageName = image.name;
+    const imageName = image.name ?? `Imagem ${index + 1}`;
     const alreadyUpload = typeof image === 'string';
 
     if (
