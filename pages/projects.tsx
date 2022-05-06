@@ -30,7 +30,7 @@ export default function Home({ postsAPI }) {
   return (
     <div
       ref={containerRef}
-      className="h-screen overflow-auto snap-y snap-mandatory scroll-smooth"
+      className="h-screen overflow-auto snap-y scroll-smooth"
     >
       <Head title="Projetos | Mário Santos" path={router.asPath} />
 
