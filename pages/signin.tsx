@@ -59,6 +59,10 @@ export default function SignIn() {
                     onSubmit={(e) =>
                       preventSignIn(e, emailInput, passwordInput)
                     }
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter')
+                        preventSignIn(e, emailInput, passwordInput);
+                    }}
                   >
                     <div className="relative w-full mb-3">
                       <label
