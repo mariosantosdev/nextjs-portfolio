@@ -5,9 +5,12 @@ export function initFirebaseAdmin() {
 
   try {
     const app = admin.initializeApp({
-      credential: admin.credential.cert(require('../firebase-admin.json')),
+      credential: admin.credential.cert({
+        clientEmail: process.env.NEXT_PRIVATE_FIREBASE_CLIENT_EMAIL,
+        privateKey: process.env.NEXT_PRIVATE_FIREBASE_PRIVATE_KEY,
+        projectId: process.env.NEXT_PRIVATE_FIREBASE_PROJECT_ID,
+      }),
     });
-    console.log('Initialized Firebase Admin.');
     return app;
   } catch (error) {
     /*
