@@ -78,7 +78,7 @@ function SocialMedias() {
 
         {/* CV Button */}
         <li>
-          <Link href="/curriculo.pdf">
+          <Link href="/Curriculo.pdf">
             <a target="_blank">
               <MdOutlineFileDownload
                 className="text-white transition-all duration-300 hover:text-indigo-500"
