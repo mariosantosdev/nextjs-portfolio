@@ -1,20 +1,22 @@
-import { NextApiRequest } from "next";
-import JwtService from "./jwt";
+import { auth } from 'firebase-admin';
+import { initFirebaseAdmin } from './firebaseAdmin';
 
-export default function isAuthenticated(req: NextApiRequest) {
-    const promise = new Promise<boolean>((resolve) => {
-        let token = req.headers.authorization
-        if (!token) resolve(false);
-        token = typeof token === 'string' ? token : token[0];
+export default function isAuthenticated(token: string) {
+  return new Promise<boolean>((resolve, reject) => {
+    if (!token) return resolve(false);
+    const adminApp = initFirebaseAdmin();
 
-        const tokenIsValid = new JwtService()
-            .verifyToken(token.replace('Bearer ', ''));
+    token = typeof token === 'string' ? token : token[0];
+    if (!token) reject('Token inválido');
 
+    const tokenWithoutType = token.replace('Bearer ', '');
 
-        if (!tokenIsValid) resolve(false);
-
-        resolve(true);
-    });
-
-    return Promise.resolve(promise);
+    auth(adminApp)
+      .verifyIdToken(tokenWithoutType, false)
+      .then(() => resolve(true))
+      .catch((error) => {
+        console.error(error);
+        resolve(false);
+      });
+  });
 }

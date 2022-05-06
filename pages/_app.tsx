@@ -8,6 +8,7 @@ import '../services/firebase';
 import '../styles/globals.css';
 import { Fragment } from 'react';
 import Head from 'next/head';
+import { AuthProvider } from '../contexts/AuthContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -20,8 +21,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <Script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js" />
       <AppProvider>
-        <Component {...pageProps} />
-        <ToastContainer />
+        <AuthProvider>
+          <Component {...pageProps} />
+          <ToastContainer />
+        </AuthProvider>
       </AppProvider>
     </Fragment>
   );

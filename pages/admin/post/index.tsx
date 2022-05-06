@@ -11,6 +11,7 @@ import api from '../../../services/api';
 import PostForms from '../../../components/Forms/Post';
 import { uploadImage, uploadMultiImages } from '../../../utils/firebase';
 import { useRouter } from 'next/router';
+import isAuthenticated from '../../../services/authMiddleware';
 
 type PostsData = {
   title: string;
@@ -108,13 +109,16 @@ export default function CreatePost() {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { ['@marioportfolio:token']: token } = parseCookies(ctx);
 
-  if (!token)
-    return {
-      redirect: {
-        destination: '/signin',
-        permanent: false,
-      },
-    };
+  const unauthorization = {
+    redirect: {
+      destination: '/signin',
+      permanent: false,
+    },
+  };
+
+  if (!token) return unauthorization;
+
+  if (!(await isAuthenticated(token))) return unauthorization;
 
   return {
     props: {},
