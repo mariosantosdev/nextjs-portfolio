@@ -112,7 +112,7 @@ export default function PostsTable({
                 {haveActionRow && (
                   <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                     <a
-                      href={`/admin/post/edit/${content.id}`}
+                      href={`/admin/post/${content.id}`}
                       className="text-white underline duration-500 dark:text-black"
                     >
                       Editar

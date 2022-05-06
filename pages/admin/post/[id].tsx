@@ -4,19 +4,19 @@ import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import { toast } from 'react-toastify';
 
-import Header from '../../../../components/Navbar/Header';
-import Footer from '../../../../components/Footer';
-import Sidebar from '../../../../components/Navbar/Sidebar';
-import api, { createApiConnector } from '../../../../services/api';
-import PostForms from '../../../../components/Forms/Post';
+import Header from '../../../components/Navbar/Header';
+import Footer from '../../../components/Footer';
+import Sidebar from '../../../components/Navbar/Sidebar';
+import api, { createApiConnector } from '../../../services/api';
+import PostForms from '../../../components/Forms/Post';
 import {
   deleteImage,
   deleteMultiImages,
   uploadImage,
   uploadMultiImages,
-} from '../../../../utils/firebase';
+} from '../../../utils/firebase';
 import { useRouter } from 'next/router';
-import isAuthenticated from '../../../../services/authMiddleware';
+import isAuthenticated from '../../../services/authMiddleware';
 
 type PostsData = {
   title: string;
