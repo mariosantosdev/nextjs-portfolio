@@ -21,7 +21,7 @@ export default function Home({ postsAPI }) {
   return (
     <div
       ref={divRef}
-      className="h-screen overflow-scroll snap-y snap-mandatory scroll-smooth"
+      className="h-screen overflow-auto snap-y snap-mandatory scroll-smooth"
       onScroll={() => onScroll(divRef)}
     >
       <ScrollActionSheet target={divRef} />
@@ -31,7 +31,7 @@ export default function Home({ postsAPI }) {
       />
 
       {/* Cover Header */}
-      <div className='relative snap-start bg-[url("/cover.jpeg")] bg-no-repeat bg-cover w-full h-screen bg-center'>
+      <div className='relative snap-start bg-[url("/cover.jpeg")] bg-no-repeat bg-cover h-screen bg-center'>
         <Header />
         <div className="flex flex-col-reverse items-center justify-center w-full h-full max-w-5xl py-4 mx-auto md:px-4 md:justify-between md:flex-row">
           {/* Texts */}

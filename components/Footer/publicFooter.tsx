@@ -2,9 +2,9 @@ import Image from 'next/image';
 
 export default function PublicFooter() {
   return (
-    <footer className="flex justify-center w-full py-4 bg-white">
+    <footer className="flex justify-center w-full py-4 text-white bg-indigo-900">
       <div className="flex flex-col items-center w-full max-w-5xl md:px-4 md:justify-between md:flex-row">
-        <p>© Mário Santos. All Rights Reserved.</p>
+        <p>© Mário Santos - {new Date().getFullYear()}. All Rights Reserved.</p>
         <a href="https://vercel.com" target="_blank" rel="noopener noreferrer">
           Powered by{' '}
           <span>

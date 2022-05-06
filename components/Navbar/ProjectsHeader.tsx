@@ -87,7 +87,7 @@ export default function ProjectsHeader() {
     <header
       className={`${
         showMenu && 'h-screen fixed z-50'
-      } z-10 flex flex-col w-screen p-4 lg:flex-row bg-black`}
+      } z-10 flex flex-col w-full p-4 lg:flex-row bg-black`}
     >
       {/* SmallScreen Version */}
       <div className="flex flex-row lg:hidden">

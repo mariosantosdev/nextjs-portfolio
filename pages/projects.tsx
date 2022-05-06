@@ -28,12 +28,15 @@ export default function Home({ postsAPI }) {
   const [posts] = useState<Post[]>(postsAPI || []);
 
   return (
-    <div ref={containerRef} className="scroll-smooth">
+    <div
+      ref={containerRef}
+      className="h-screen overflow-auto snap-y snap-mandatory scroll-smooth"
+    >
       <Head title="Projetos | Mário Santos" path={router.asPath} />
 
       <ScrollActionSheet target={containerRef} />
 
-      <div className="flex flex-col w-full h-screen bg-gray-200">
+      <div className="flex flex-col h-screen bg-gray-200">
         <Header />
         <div className="flex flex-col items-center w-full h-full max-w-5xl py-4 mx-auto md:px-4">
           {/* Texts */}
