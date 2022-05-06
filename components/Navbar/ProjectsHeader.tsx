@@ -8,6 +8,7 @@ import {
   AiOutlineMenu,
   AiOutlineClose,
 } from 'react-icons/ai';
+import { MdOutlineFileDownload } from 'react-icons/md';
 import { FiArrowLeft } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -69,6 +70,18 @@ function SocialMedias() {
           <Link href="https://twitter.com/mariosantosdev">
             <a target="_blank">
               <AiOutlineTwitter
+                className="text-white transition-all duration-300 hover:text-indigo-500"
+                size={24}
+              />
+            </a>
+          </Link>
+        </li>
+
+        {/* CV Button */}
+        <li>
+          <Link href="/curriculo.pdf">
+            <a target="_blank">
+              <MdOutlineFileDownload
                 className="text-white transition-all duration-300 hover:text-indigo-500"
                 size={24}
               />
