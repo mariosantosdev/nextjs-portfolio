@@ -5,6 +5,7 @@ import { parseCookies } from 'nookies';
 import React, { Fragment, FormEvent, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAuth } from '../contexts/AuthContext';
+import isAuthenticated from '../services/authMiddleware';
 
 export default function SignIn() {
   const routes = useRouter();
@@ -114,7 +115,7 @@ export default function SignIn() {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { ['@marioportfolio:token']: token } = parseCookies(ctx);
 
-  if (token) {
+  if (await isAuthenticated(token)) {
     return {
       redirect: {
         destination: '/admin',
