@@ -7,8 +7,8 @@ import {
   AiFillGithub,
   AiOutlineMenu,
   AiOutlineClose,
-  AiFillFilePdf,
 } from 'react-icons/ai';
+import { MdOutlineFileDownload } from 'react-icons/md';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import PageLink, { IPropsPageLink } from './PageLink';
@@ -27,7 +27,7 @@ function Logo() {
 function SocialMedias() {
   return (
     <div className="flex flex-col lg:flex-row h-min lg:w-1/3">
-      <ul className="flex flex-row items-center justify-center gap-4 w-full py-0 lg:justify-end lg:py-4">
+      <ul className="flex flex-row items-center justify-center w-full gap-4 py-0 lg:justify-end lg:py-4">
         {/* Instagram Button */}
         <li>
           <Link href="https://www.instagram.com/mariosantos.dev/">
@@ -80,7 +80,7 @@ function SocialMedias() {
         <li>
           <Link href="/curriculo.pdf">
             <a target="_blank">
-              <AiFillFilePdf
+              <MdOutlineFileDownload
                 className="text-white transition-all duration-300 hover:text-indigo-500"
                 size={24}
               />
