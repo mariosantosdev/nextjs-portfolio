@@ -4,18 +4,19 @@ import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import { toast } from 'react-toastify';
 
-import Header from '../../../../components/Navbar/Header';
-import Footer from '../../../../components/Footer';
-import Sidebar from '../../../../components/Navbar/Sidebar';
-import api, { createApiConnector } from '../../../../services/api';
-import PostForms from '../../../../components/Forms/Post';
+import Header from '../../../components/Navbar/Header';
+import Footer from '../../../components/Footer';
+import Sidebar from '../../../components/Navbar/Sidebar';
+import api, { createApiConnector } from '../../../services/api';
+import PostForms from '../../../components/Forms/Post';
 import {
   deleteImage,
   deleteMultiImages,
   uploadImage,
   uploadMultiImages,
-} from '../../../../utils/firebase';
+} from '../../../utils/firebase';
 import { useRouter } from 'next/router';
+import isAuthenticated from '../../../services/authMiddleware';
 
 type PostsData = {
   title: string;
@@ -253,13 +254,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { ['@marioportfolio:token']: token } = parseCookies(ctx);
   const { id } = ctx.query;
 
-  if (!token)
-    return {
-      redirect: {
-        destination: '/signin',
-        permanent: false,
-      },
-    };
+  const unauthorization = {
+    redirect: {
+      destination: '/signin',
+      permanent: false,
+    },
+  };
+
+  if (!token) return unauthorization;
+
+  if (!(await isAuthenticated(token))) return unauthorization;
 
   const api = createApiConnector(ctx);
 

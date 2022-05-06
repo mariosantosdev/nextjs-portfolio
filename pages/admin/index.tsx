@@ -9,6 +9,7 @@ import Footer from '../../components/Footer';
 import PostTable from '../../components/Table/PostsTable';
 import Sidebar from '../../components/Navbar/Sidebar';
 import api from '../../services/api';
+import isAuthenticated from '../../services/authMiddleware';
 
 export default function Dashboard({ postsAPI }) {
   const [posts] = useState(postsAPI || []);
@@ -47,13 +48,16 @@ export default function Dashboard({ postsAPI }) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { ['@marioportfolio:token']: token } = parseCookies(ctx);
 
-  if (!token)
-    return {
-      redirect: {
-        destination: '/signin',
-        permanent: false,
-      },
-    };
+  const unauthorization = {
+    redirect: {
+      destination: '/signin',
+      permanent: false,
+    },
+  };
+
+  if (!token) return unauthorization;
+
+  if (!(await isAuthenticated(token))) return unauthorization;
 
   const { data } = await api.get('/api/post');
   return {
