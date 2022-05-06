@@ -42,7 +42,7 @@ export default function SimplePost({ post, onClick }: ISimplePost) {
   return (
     <div
       onClick={onClick}
-      className="flex items-center justify-center w-full px-4 mt-4 md:w-1/2 lg:w-1/3"
+      className="flex items-center justify-center w-full px-4 md:w-1/2 lg:w-1/3"
     >
       <div className="flex flex-col cursor-pointer">
         <div className="relative h-48 overflow-hidden rounded-md md:h-64 w-72 md:w-80">
