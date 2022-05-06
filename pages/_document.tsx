@@ -7,6 +7,7 @@ export default function Document() {
                 <meta name="description" content="Sou programador há 5 anos, com experiência em diversos projetos." />
                 <link rel="icon" href="/favicon.ico" />
                 <meta name="robots" content="follow, index" />
+                <meta name="keywords" content="dev, programação, backend, nodejs, react, nextjs, typescript, javascript, portfólio, Mário Santos, Mario Technologies"/>
 
                 {/* Facebook Meta Tags */}
                 <meta property="og:type" content="website" key="og:type" />
@@ -18,7 +19,7 @@ export default function Document() {
                 {/* Twitter Meta Tags */}
                 <meta name="twitter:card" content="summary_large_image" key="twitter:card" />
                 <meta name="twitter:site" content="@mariosantosdev" key="twitter:site" />
-                <meta name="twitter:title" content="Mário Santos - Desenvolverdo Mobile, Web, Backend" key="twitter:title" />
+                <meta name="twitter:title" content="Mário Santos - Desenvolvedor Mobile, Web, Backend" key="twitter:title" />
                 <meta name="twitter:description" content="Sou programador há 5 anos, com experiência em diversos projetos." key="twitter:description" />
                 <meta name="twitter:image" content="https://github.com/mariosantosdev.png" key="twitter:image" />
             </Head>
