@@ -7,6 +7,7 @@ import {
   AiFillGithub,
   AiOutlineMenu,
   AiOutlineClose,
+  AiFillFilePdf,
 } from 'react-icons/ai';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -26,13 +27,13 @@ function Logo() {
 function SocialMedias() {
   return (
     <div className="flex flex-col lg:flex-row h-min lg:w-1/3">
-      <ul className="flex flex-row items-center justify-center w-full py-0 lg:justify-end lg:py-4">
+      <ul className="flex flex-row items-center justify-center gap-4 w-full py-0 lg:justify-end lg:py-4">
         {/* Instagram Button */}
         <li>
           <Link href="https://www.instagram.com/mariosantos.dev/">
             <a target="_blank">
               <AiFillInstagram
-                className="mr-4 text-white transition-all duration-300 hover:text-indigo-500"
+                className="text-white transition-all duration-300 hover:text-indigo-500"
                 size={24}
               />
             </a>
@@ -44,7 +45,7 @@ function SocialMedias() {
           <Link href="https://github.com/mariosantosdev">
             <a target="_blank">
               <AiFillGithub
-                className="mr-4 text-white transition-all duration-300 hover:text-indigo-500"
+                className="text-white transition-all duration-300 hover:text-indigo-500"
                 size={24}
               />
             </a>
@@ -56,7 +57,7 @@ function SocialMedias() {
           <Link href="https://www.linkedin.com/in/mariosantos-dev/">
             <a target="_blank">
               <AiFillLinkedin
-                className="mr-4 text-white transition-all duration-300 hover:text-indigo-500"
+                className="text-white transition-all duration-300 hover:text-indigo-500"
                 size={24}
               />
             </a>
@@ -68,6 +69,18 @@ function SocialMedias() {
           <Link href="https://twitter.com/mariosantosdev">
             <a target="_blank">
               <AiOutlineTwitter
+                className="text-white transition-all duration-300 hover:text-indigo-500"
+                size={24}
+              />
+            </a>
+          </Link>
+        </li>
+
+        {/* CV Button */}
+        <li>
+          <Link href="/curriculo.pdf">
+            <a target="_blank">
+              <AiFillFilePdf
                 className="text-white transition-all duration-300 hover:text-indigo-500"
                 size={24}
               />
