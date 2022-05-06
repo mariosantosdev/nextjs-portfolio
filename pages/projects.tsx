@@ -36,7 +36,7 @@ export default function Home({ postsAPI }) {
 
       <ScrollActionSheet target={containerRef} />
 
-      <div className="flex flex-col h-screen bg-gray-200">
+      <div className="flex flex-col min-h-screen bg-gray-200">
         <Header />
         <div className="flex flex-col items-center w-full h-full max-w-5xl py-4 mx-auto md:px-4">
           {/* Texts */}
@@ -47,8 +47,8 @@ export default function Home({ postsAPI }) {
             Veja alguns dos projetos criados por mim!
           </p>
 
-          <div className="flex flex-col w-full max-w-5xl">
-            <div className="flex flex-col flex-wrap items-center justify-center w-full md:flex-row md:px-0">
+          <div className="flex flex-col w-full max-w-5xl mt-4">
+            <div className="flex flex-col flex-wrap items-center justify-center w-full gap-4 md:flex-row md:px-0">
               {posts.length > 0 ? (
                 posts.map((post) => (
                   <SimplePost
