@@ -55,6 +55,7 @@ function deleteUniquePost(id: string) {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         const { query, method } = req;
+        const token = req.headers?.authorization;
 
         switch (method) {
             case 'GET':
@@ -63,7 +64,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 res.status(200).json({ post });
                 break;
             case 'PUT':
-                if (!await isAuthenticated(req))
+                if (!await isAuthenticated(token))
                     return res.status(403).json({ message: 'Você não tem acesso a essa api.' });
 
                 const idToUpdate = typeof query.id === 'object' ? query.id[0] : query.id;
@@ -71,7 +72,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 res.status(200).json({ post: postUpdated });
                 break;
             case 'DELETE':
-                if (!await isAuthenticated(req))
+                if (!await isAuthenticated(token))
                     return res.status(403).json({ message: 'Você não tem acesso a essa api.' });
 
                 const idToDelete = typeof query.id === 'object' ? query.id[0] : query.id;
