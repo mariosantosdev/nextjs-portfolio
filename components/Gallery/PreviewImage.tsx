@@ -14,7 +14,7 @@ export default function PreviewImage({ image, onBlur }: IPreviewImage) {
       aria-labelledby="modalPreviewImageLabel"
       aria-hidden="true"
     >
-      <div className="relative w-auto pointer-events-none modal-dialog">
+      <div className="relative w-auto pointer-events-none modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div className="relative flex flex-col w-full text-current bg-white border-none rounded-md shadow-lg outline-none pointer-events-auto modal-content bg-clip-padding">
           <div className="flex items-center justify-between flex-shrink-0 p-4 border-b border-gray-200 modal-header rounded-t-md">
             <h5
