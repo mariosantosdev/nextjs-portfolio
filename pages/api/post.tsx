@@ -67,6 +67,8 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
+    const token = req.headers?.authorization;
+
     switch (req.method) {
       case 'GET':
         const { limit } = req.query;
@@ -77,7 +79,7 @@ export default async function handler(
         break;
 
       case 'POST':
-        if (!(await isAuthenticated(req)))
+        if (!(await isAuthenticated(token)))
           return res
             .status(403)
             .json({ message: 'Você não tem acesso a essa api.' });
