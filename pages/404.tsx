@@ -7,7 +7,7 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <div className="h-screen overflow-auto snap-y snap-mandatory scroll-smooth">
+    <div className="h-screen overflow-auto snap-y scroll-smooth">
       <Head
         title="Mário Santos - Desenvolvedor Mobile, Web, Backend"
         path={router.asPath}

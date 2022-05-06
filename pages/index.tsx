@@ -21,7 +21,7 @@ export default function Home({ postsAPI }) {
   return (
     <div
       ref={divRef}
-      className="h-screen overflow-auto snap-y snap-mandatory scroll-smooth"
+      className="h-screen overflow-auto snap-y scroll-smooth"
       onScroll={() => onScroll(divRef)}
     >
       <ScrollActionSheet target={divRef} />
